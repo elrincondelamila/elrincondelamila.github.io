@@ -1,80 +1,79 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Rincón de la Mila</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
+
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
-  background:#0f0f0f; /* 🔥 Fondo oscuro nuevo */
+  font-family:'Segoe UI',sans-serif;
+  background:#0f0f0f; /* 🔥 Fondo oscuro */
   color:white;
 }
 
-/* ===== HEADER (TU LOGO SE MANTIENE) ===== */
+/* HEADER */
 header{
-  background:#f4b400;
-  padding:20px;
-  text-align:center;
-  color:white;
-}
-header h1{
-  margin:0;
-  font-size:32px;
-}
-
-/* ===== CONTADOR ===== */
-.counter{
-  text-align:center;
-  padding:15px;
-  font-weight:bold;
-  color:#25D366;
-}
-
-/* ===== HERO ===== */
-.hero{
-  text-align:center;
-  padding:40px 20px;
-}
-.btn{
-  display:inline-block;
-  padding:12px 25px;
-  background:#25D366;
-  color:white;
-  text-decoration:none;
-  border-radius:30px;
-  font-weight:600;
-}
-
-/* ===== SECCIONES ===== */
-.section{
+  background:#111;
   padding:40px 20px;
   text-align:center;
 }
-.section h3{
-  color:#f4b400;
+
+header img{
+  width:100%;
+  max-width:500px;
 }
 
-.cards{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:20px;
+/* SECCIONES */
+section{
+  padding:60px 20px;
+  max-width:1100px;
+  margin:auto;
 }
 
 .card{
   background:#1a1a1a;
-  padding:20px;
-  width:250px;
-  border-radius:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.6);
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.6);
+  margin-bottom:40px;
 }
 
-/* ===== INPUTS ===== */
+h2{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+/* CONTADOR */
+.counter{
+  font-size:32px;
+  text-align:center;
+  color:#25D366;
+  font-weight:bold;
+}
+
+/* PRODUCTOS */
+.products{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap:30px;
+}
+
+.product{
+  background:#222;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.product img{
+  width:100%;
+  border-radius:15px;
+  margin-bottom:15px;
+}
+
 input{
   padding:8px;
   border-radius:8px;
@@ -83,11 +82,25 @@ input{
   width:90%;
 }
 
-/* ===== CARRITO ===== */
+button{
+  background:#25D366;
+  color:black;
+  border:none;
+  padding:10px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+button:hover{
+  opacity:0.8;
+}
+
+/* CARRITO */
 .cart{
   background:#111;
+  color:white;
   padding:20px;
-  margin:20px;
   border-radius:15px;
 }
 
@@ -97,156 +110,167 @@ input{
   margin:8px 0;
 }
 
-/* ===== BOTON WHATSAPP FLOTANTE ===== */
-.float{
+/* WHATSAPP FLOTANTE */
+.whatsapp-float{
   position:fixed;
-  bottom:20px;
-  right:20px;
+  width:60px;
+  height:60px;
+  bottom:25px;
+  right:25px;
   background:#25D366;
-  padding:15px;
   border-radius:50%;
-}
-.float a{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
   text-decoration:none;
-  font-size:20px;
   color:black;
 }
+
+iframe{
+  width:100%;
+  height:300px;
+  border:0;
+  border-radius:20px;
+}
+
 </style>
 </head>
+
 <body>
 
 <header>
-  <h1>El Rincón de la Mila</h1>
-  <p>Milanesas de pollo artesanales por mayor</p>
+<img src="BackgroundEraser_20260304_034450533.png">
 </header>
 
-<!-- 🔥 CONTADOR -->
-<div class="counter">
-🔥 +500 Clientes Satisfechos
+<section>
+
+<div class="card">
+<h2>🔥 + Clientes Satisfechos</h2>
+<div class="counter" id="counter">0</div>
 </div>
 
-<!-- HERO -->
-<section class="hero">
-<h2>Sabor casero, calidad premium</h2>
-<p>Venta por kilo • Doble rebozado crocante</p>
-<a class="btn" href="https://wa.me/543624505931" target="_blank">Hacer pedido</a>
-</section>
-
-<!-- PRODUCTO CON CARRITO -->
-<section class="section">
-<h3>Comprar Producto</h3>
+<div class="card">
+<h2>Nuestros Productos (Milanesa de Pollo)</h2>
 
 <input type="text" id="clientName" placeholder="Tu Nombre">
-<input type="number" id="quantity" placeholder="Cantidad" min="1" value="1">
+<input type="number" id="quantity" placeholder="Cantidad (kg)" min="1" value="1">
 
-<div class="cards">
-<div class="card">
-<h4>Milanesa Clásica</h4>
-<p>$11.900</p>
-<button class="btn" onclick="addToCart()">Agregar al carrito</button>
+<div class="products">
+
+<div class="product">
+<img src="milanesapollo.jpg">
+<h3>Milanesa x Kg</h3>
+<p>Desde $8.600<br>🔥 A partir de 3kg = $7.000 por kg</p>
+<button onclick="addToCart()">Agregar al Carrito</button>
+</div>
+
 </div>
 </div>
-</section>
 
 <!-- CARRITO -->
-<section class="section">
-<h3>🛒 Carrito</h3>
-<div class="cart">
-<div id="cartItems"></div>
-<h3>Total: $<span id="total">0</span></h3>
-<button class="btn" onclick="checkout()">🟢 Comprar Ahora</button>
+<div class="card cart">
+<h2>🛒 Carrito</h2>
+<div id="cart-list"></div>
+<p>Total: $<span id="total">0</span></p>
+<button onclick="checkout()">🟢 Comprar por WhatsApp</button>
 </div>
+
+<h2>📍 Ubicación</h2>
+<iframe src="https://www.google.com/maps?q=Miguel%20Cane%202575,%20Barranqueras,%20Chaco&output=embed"></iframe>
+
 </section>
 
-<!-- UBICACION -->
-<section class="section">
-<h3>📍 Ubicación</h3>
-<p>Presidencia de la Plaza, Chaco</p>
-<iframe src="https://www.google.com/maps/embed?pb=!1m18"
-width="90%" height="250" style="border-radius:15px;border:none;"></iframe>
-</section>
-
-<!-- GALERIA ORIGINAL -->
-<section class="section">
-<h3>Galería</h3>
-<div class="cards">
-<div class="card">
-<img src="https://via.placeholder.com/250" style="width:100%;border-radius:12px;">
-<p>Milanesas frescas.</p>
-</div>
-</div>
-</section>
-
-<footer style="background:#333;padding:20px;text-align:center;">
-© 2026 El Rincón de la Mila  
-<p>Instagram: <a href="https://instagram.com/elrincon.delamila" target="_blank" style="color:#f4b400;">@elrincon.delamila</a></p>
-</footer>
-
-<!-- WHATSAPP FLOTANTE -->
-<div class="float">
-<a href="https://wa.me/543624505931" target="_blank">💬</a>
-</div>
+<a href="https://wa.me/543624505931" class="whatsapp-float">💬</a>
 
 <script>
 
-let total = 0;
-const price = 11900;
+let cart=[];
+let total=0;
 
 function addToCart(){
 
-let name = document.getElementById("clientName").value;
-let quantity = parseInt(document.getElementById("quantity").value);
+let name=document.getElementById("clientName").value;
+let kg=parseInt(document.getElementById("quantity").value);
 
-if(name === ""){
+if(name===""){
 alert("Escribe tu nombre");
 return;
 }
 
-let cart = document.getElementById("cartItems");
-let itemTotal = price * quantity;
+let pricePerKg = kg >=3 ? 7000 : 8600;
+let itemTotal = pricePerKg * kg;
 
-let item = document.createElement("div");
-item.classList.add("cart-item");
+let item = {
+text: name+" - "+kg+"kg - $"+itemTotal,
+price: itemTotal
+};
 
-item.innerHTML = `
-<span>${name} - ${quantity}x</span>
-<span>$${itemTotal}</span>
-<button onclick="removeItem(this, ${itemTotal})">❌</button>
-`;
-
-cart.appendChild(item);
-
+cart.push(item);
 total += itemTotal;
-document.getElementById("total").innerText = total;
+
+renderCart();
 }
 
-function removeItem(btn, itemTotal){
-btn.parentElement.remove();
-total -= itemTotal;
-document.getElementById("total").innerText = total;
+function renderCart(){
+
+let list=document.getElementById("cart-list");
+list.innerHTML="";
+
+cart.forEach((item,index)=>{
+let div=document.createElement("div");
+div.classList.add("cart-item");
+
+div.innerHTML=`
+<span>${item.text}</span>
+<button onclick="removeItem(${index})">❌</button>
+`;
+
+list.appendChild(div);
+});
+
+document.getElementById("total").innerText=total;
+}
+
+function removeItem(index){
+total -= cart[index].price;
+cart.splice(index,1);
+renderCart();
 }
 
 function checkout(){
 
-let name = document.getElementById("clientName").value;
-let items = document.querySelectorAll(".cart-item");
-
-if(items.length === 0){
+if(cart.length===0){
 alert("Carrito vacío");
 return;
 }
 
-let message = "Hola soy " + name + ", quiero comprar:\n\n";
+let name=document.getElementById("clientName").value;
 
-items.forEach(item=>{
-message += item.children[0].innerText + " - " + item.children[1].innerText + "\n";
+let message="Hola soy "+name+" quiero comprar:%0A%0A";
+
+cart.forEach(item=>{
+message += item.text+"%0A";
 });
 
-message += "\nTotal: $" + total;
+message += "%0ATotal: $"+total;
 
-let url = "https://wa.me/543624505931?text=" + encodeURIComponent(message);
-window.open(url,"_blank");
+window.open("https://wa.me/543624505931?text="+message,"_blank");
 }
+
+/* CONTADOR */
+let count=0;
+let target=500;
+let counter=document.getElementById("counter");
+
+let interval=setInterval(()=>{
+count+=5;
+counter.innerText="+"+count;
+if(count>=target){
+counter.innerText="+500";
+clearInterval(interval);
+}
+},30);
 
 </script>
 

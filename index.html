@@ -12,7 +12,9 @@ section{padding:40px;text-align:center;}
 .card{background:white;padding:20px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,0.1);width:250px;}
 /* TESTIMONIOS */
 .testimonials{background:#fff;padding:40px;border-radius:20px;margin:20px;}
-.testimonial{margin-bottom:20px;font-style:italic;}
+.review{display:flex;align-items:center;gap:15px;margin-bottom:20px;text-align:left;}
+.review img{width:50px;height:50px;border-radius:50%;object-fit:cover;}
+.review div{font-size:14px;}
 /* BOTON WHATSAPP */
 .whatsapp-btn{
 position:fixed;
@@ -30,22 +32,43 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 </head>
 <body>
 <header>
-<img src="milanesa.jpg" alt="Producto">
+<!-- 🔥 AQUI PONE EL NOMBRE EXACTO DE TU LOGO -->
+<img src="logo.png" alt="Logo">
 <h1>El Rincón de la Mila</h1>
 </header>
 <section>
 <h2>Nuestros Productos</h2>
 <div class="products">
 <div class="card">
+<img src="milanesa.jpg" alt="Producto" style="width:100%;border-radius:10px;">
 <h3>Milanesa de Pollo</h3>
-<p>Precio por a partir de 3kg: $7.000</p>
+<p>Precio por kg: $7.000</p>
 </div>
 </div>
-</section><!-- TESTIMONIOS --><section class="testimonials">
+</section><!-- TESTIMONIOS CON PERFIL REAL --><section class="testimonials">
 <h2>Opiniones de Clientes</h2>
-<div class="testimonial">"Excelente calidad y sabor" ⭐⭐⭐⭐⭐</div>
-<div class="testimonial">"Siempre compro para mi negocio" ⭐⭐⭐⭐⭐</div>
-<div class="testimonial">"Muy recomendado" ⭐⭐⭐⭐⭐</div>
+<div class="review">
+<img src="https://i.pravatar.cc/50?img=1">
+<div>
+<strong>Juan Perez</strong><br>
+⭐ ⭐ ⭐ ⭐ ⭐<br>
+"Excelente calidad y sabor"
+</div>
+</div><div class="review">
+<img src="https://i.pravatar.cc/50?img=2">
+<div>
+<strong>Maria Lopez</strong><br>
+⭐ ⭐ ⭐ ⭐ ⭐<br>
+"Siempre compro para mi negocio"
+</div>
+</div><div class="review">
+<img src="https://i.pravatar.cc/50?img=3">
+<div>
+<strong>Carlos Gomez</strong><br>
+⭐ ⭐ ⭐ ⭐ ⭐<br>
+"Muy recomendado"
+</div>
+</div>
 </section><!-- BOTON WHATSAPP --><a class="whatsapp-btn" href="https://wa.me/543624505931" target="_blank">
 📲 Pedir por WhatsApp
 </a></body>

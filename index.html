@@ -67,6 +67,43 @@ h2{text-align:center;margin-bottom:20px;}
   object-fit:cover;
 }
 
+.reviews-container{
+  overflow:hidden;
+  position:relative;
+}
+
+.reviews{
+  display:flex;
+  gap:20px;
+  transition:transform 0.5s ease;
+}
+
+.review{
+  min-width:300px;
+  background:#fafafa;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.review img{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+}
+
+.stars{
+  color:#ff9800;
+}
+
+form input, form textarea{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
 button{
   background:#d62828;
   color:white;
@@ -114,7 +151,7 @@ iframe{
 <body>
 
 <header>
-<img src="BackgroundEraser_20260304_034450533.png" alt="Logo">
+<img src="BackgroundEraser_20260304_034450533.png">
 <p>Milanesas artesanales premium</p>
 </header>
 
@@ -125,28 +162,44 @@ iframe{
 <div class="counter" id="counter">0</div>
 </div>
 
+<!-- PRODUCTOS -->
 <div class="card">
 <h2>Nuestros Productos</h2>
-
 <div class="products">
-
 <div class="product">
 <img src="Milanesapollo.jpeg">
-<h3>Milanesa de Pollo x 1kg</h3>
+<h3>Milanesa x 1kg</h3>
 <p>$8.000</p>
 <button onclick="addToCart('1kg',8000)">Agregar</button>
 </div>
 
 <div class="product">
 <img src="Milanesapollo.jpeg">
-<h3>Milanesa de Pollo x 3kg</h3>
+<h3>Milanesa x 3kg</h3>
 <p>$20.400</p>
 <button onclick="addToCart('3kg',20400)">Agregar</button>
 </div>
-
 </div>
 </div>
 
+<!-- RESEÑAS CON CARRUSEL -->
+<div class="card">
+<h2>Opiniones de Clientes</h2>
+
+<div class="reviews-container">
+<div class="reviews" id="reviews"></div>
+</div>
+
+<h3>Dejá tu opinión</h3>
+<form onsubmit="addReview(event)">
+<input type="text" id="name" placeholder="Tu nombre" required>
+<textarea id="comment" placeholder="Tu comentario" required></textarea>
+<button type="submit">Publicar</button>
+</form>
+
+</div>
+
+<!-- CARRITO -->
 <div class="card">
 <h2>Carrito</h2>
 <ul id="cart-list"></ul>
@@ -166,19 +219,7 @@ iframe{
 let cart=[];
 let total=0;
 
-function renderCart(){
-  let list=document.getElementById("cart-list");
-  list.innerHTML="";
-
-  cart.forEach((item,index)=>{
-    let li=document.createElement("li");
-    li.innerHTML = item.name+" - $"+item.price+
-    " <button class='remove-btn' onclick='removeItem("+index+")'>❌</button>";
-    list.appendChild(li);
-  });
-
-  document.getElementById("total").innerText=total;
-}
+/* ---- CARRITO ---- */
 
 function addToCart(product,price){
   cart.push({name:product,price:price});
@@ -192,19 +233,81 @@ function removeItem(index){
   renderCart();
 }
 
+function renderCart(){
+  let list=document.getElementById("cart-list");
+  list.innerHTML="";
+  cart.forEach((item,index)=>{
+    let li=document.createElement("li");
+    li.innerHTML=item.name+" - $"+item.price+
+    " <button class='remove-btn' onclick='removeItem("+index+")'>❌</button>";
+    list.appendChild(li);
+  });
+  document.getElementById("total").innerText=total;
+}
+
 function sendWhatsApp(){
   let message="Hola! Quiero comprar:%0A";
-
   cart.forEach(item=>{
     message+=item.name+" - $"+item.price+"%0A";
   });
-
   message+="%0ATotal: $"+total;
-
   window.open("https://wa.me/543624505931?text="+message);
 }
 
-/* Contador animado */
+/* ---- RESEÑAS ---- */
+
+function loadReviews(){
+  let reviews=JSON.parse(localStorage.getItem("reviews")) || [];
+  let container=document.getElementById("reviews");
+  container.innerHTML="";
+
+  reviews.forEach(r=>{
+    let div=document.createElement("div");
+    div.className="review";
+    div.innerHTML=`
+      <img src="https://i.pravatar.cc/100">
+      <h4>${r.name}</h4>
+      <div class="stars">★★★★★</div>
+      <p>${r.comment}</p>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function addReview(e){
+  e.preventDefault();
+  let name=document.getElementById("name").value;
+  let comment=document.getElementById("comment").value;
+
+  let reviews=JSON.parse(localStorage.getItem("reviews")) || [];
+  reviews.push({name,comment});
+  localStorage.setItem("reviews",JSON.stringify(reviews));
+
+  document.getElementById("name").value="";
+  document.getElementById("comment").value="";
+
+  loadReviews();
+}
+
+/* ---- CARRUSEL AUTOMATICO ---- */
+
+let scrollPosition=0;
+
+function autoCarousel(){
+  let container=document.querySelector(".reviews");
+  if(container){
+    scrollPosition += 320;
+    if(scrollPosition >= container.scrollWidth){
+      scrollPosition = 0;
+    }
+    container.style.transform="translateX(-"+scrollPosition+"px)";
+  }
+}
+
+setInterval(autoCarousel,3000);
+
+/* ---- CONTADOR ---- */
+
 let count=0;
 let target=500;
 let counter=document.getElementById("counter");
@@ -217,6 +320,8 @@ let interval=setInterval(()=>{
     clearInterval(interval);
   }
 },20);
+
+loadReviews();
 
 </script>
 

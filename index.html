@@ -1,278 +1,52 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Rincón de la Mila</title>
-
 <style>
-
-body{
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:#0f0f0f; /* 🔥 Fondo oscuro */
-  color:white;
+body{margin:0;font-family:Arial;background:#f4f4f4;color:#222;}
+header{background:white;padding:30px;text-align:center;}
+header img{max-width:250px;}
+section{padding:40px;text-align:center;}
+.products{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;}
+.card{background:white;padding:20px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,0.1);width:250px;}
+/* TESTIMONIOS */
+.testimonials{background:#fff;padding:40px;border-radius:20px;margin:20px;}
+.testimonial{margin-bottom:20px;font-style:italic;}
+/* BOTON WHATSAPP */
+.whatsapp-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+padding:15px 20px;
+border-radius:50px;
+text-decoration:none;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
 }
-
-/* HEADER */
-header{
-  background:#111;
-  padding:40px 20px;
-  text-align:center;
-}
-
-header img{
-  width:100%;
-  max-width:500px;
-}
-
-/* SECCIONES */
-section{
-  padding:60px 20px;
-  max-width:1100px;
-  margin:auto;
-}
-
-.card{
-  background:#1a1a1a;
-  padding:40px;
-  border-radius:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.6);
-  margin-bottom:40px;
-}
-
-h2{
-  text-align:center;
-  margin-bottom:30px;
-}
-
-/* CONTADOR */
-.counter{
-  font-size:32px;
-  text-align:center;
-  color:#25D366;
-  font-weight:bold;
-}
-
-/* PRODUCTOS */
-.products{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-  gap:30px;
-}
-
-.product{
-  background:#222;
-  padding:20px;
-  border-radius:15px;
-  text-align:center;
-}
-
-.product img{
-  width:100%;
-  border-radius:15px;
-  margin-bottom:15px;
-}
-
-input{
-  padding:8px;
-  border-radius:8px;
-  border:none;
-  margin:5px;
-  width:90%;
-}
-
-button{
-  background:#25D366;
-  color:black;
-  border:none;
-  padding:10px 20px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-button:hover{
-  opacity:0.8;
-}
-
-/* CARRITO */
-.cart{
-  background:#111;
-  color:white;
-  padding:20px;
-  border-radius:15px;
-}
-
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  margin:8px 0;
-}
-
-/* WHATSAPP FLOTANTE */
-.whatsapp-float{
-  position:fixed;
-  width:60px;
-  height:60px;
-  bottom:25px;
-  right:25px;
-  background:#25D366;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  text-decoration:none;
-  color:black;
-}
-
-iframe{
-  width:100%;
-  height:300px;
-  border:0;
-  border-radius:20px;
-}
-
 </style>
 </head>
-
 <body>
-
 <header>
-<img src="BackgroundEraser_20260304_034450533.png">
+<img src="milanesa.jpg" alt="Producto">
+<h1>El Rincón de la Mila</h1>
 </header>
-
 <section>
-
-<div class="card">
-<h2>🔥 + Clientes Satisfechos</h2>
-<div class="counter" id="counter">0</div>
-</div>
-
-<div class="card">
-<h2>Nuestros Productos (Milanesa de Pollo)</h2>
-
-<input type="text" id="clientName" placeholder="Tu Nombre">
-<input type="number" id="quantity" placeholder="Cantidad (kg)" min="1" value="1">
-
+<h2>Nuestros Productos</h2>
 <div class="products">
-
-<div class="product">
-<img src="milanesapollo.jpg">
-<h3>Milanesa x Kg</h3>
-<p>Desde $8.600<br>🔥 A partir de 3kg = $7.000 por kg</p>
-<button onclick="addToCart()">Agregar al Carrito</button>
-</div>
-
+<div class="card">
+<h3>Milanesa de Pollo</h3>
+<p>Precio por a partir de 3kg: $7.000</p>
 </div>
 </div>
-
-<!-- CARRITO -->
-<div class="card cart">
-<h2>🛒 Carrito</h2>
-<div id="cart-list"></div>
-<p>Total: $<span id="total">0</span></p>
-<button onclick="checkout()">🟢 Comprar por WhatsApp</button>
-</div>
-
-<h2>📍 Ubicación</h2>
-<iframe src="https://www.google.com/maps?q=Miguel%20Cane%202575,%20Barranqueras,%20Chaco&output=embed"></iframe>
-
-</section>
-
-<a href="https://wa.me/543624505931" class="whatsapp-float">💬</a>
-
-<script>
-
-let cart=[];
-let total=0;
-
-function addToCart(){
-
-let name=document.getElementById("clientName").value;
-let kg=parseInt(document.getElementById("quantity").value);
-
-if(name===""){
-alert("Escribe tu nombre");
-return;
-}
-
-let pricePerKg = kg >=3 ? 7000 : 8600;
-let itemTotal = pricePerKg * kg;
-
-let item = {
-text: name+" - "+kg+"kg - $"+itemTotal,
-price: itemTotal
-};
-
-cart.push(item);
-total += itemTotal;
-
-renderCart();
-}
-
-function renderCart(){
-
-let list=document.getElementById("cart-list");
-list.innerHTML="";
-
-cart.forEach((item,index)=>{
-let div=document.createElement("div");
-div.classList.add("cart-item");
-
-div.innerHTML=`
-<span>${item.text}</span>
-<button onclick="removeItem(${index})">❌</button>
-`;
-
-list.appendChild(div);
-});
-
-document.getElementById("total").innerText=total;
-}
-
-function removeItem(index){
-total -= cart[index].price;
-cart.splice(index,1);
-renderCart();
-}
-
-function checkout(){
-
-if(cart.length===0){
-alert("Carrito vacío");
-return;
-}
-
-let name=document.getElementById("clientName").value;
-
-let message="Hola soy "+name+" quiero comprar:%0A%0A";
-
-cart.forEach(item=>{
-message += item.text+"%0A";
-});
-
-message += "%0ATotal: $"+total;
-
-window.open("https://wa.me/543624505931?text="+message,"_blank");
-}
-
-/* CONTADOR */
-let count=0;
-let target=500;
-let counter=document.getElementById("counter");
-
-let interval=setInterval(()=>{
-count+=5;
-counter.innerText="+"+count;
-if(count>=target){
-counter.innerText="+500";
-clearInterval(interval);
-}
-},30);
-
-</script>
-
-</body>
+</section><!-- TESTIMONIOS --><section class="testimonials">
+<h2>Opiniones de Clientes</h2>
+<div class="testimonial">"Excelente calidad y sabor" ⭐⭐⭐⭐⭐</div>
+<div class="testimonial">"Siempre compro para mi negocio" ⭐⭐⭐⭐⭐</div>
+<div class="testimonial">"Muy recomendado" ⭐⭐⭐⭐⭐</div>
+</section><!-- BOTON WHATSAPP --><a class="whatsapp-btn" href="https://wa.me/543624505931" target="_blank">
+📲 Pedir por WhatsApp
+</a></body>
 </html>

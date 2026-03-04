@@ -1,75 +1,254 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Rincón de la Mila</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
-body{margin:0;font-family:Arial;background:#f4f4f4;color:#222;}
-header{background:white;padding:30px;text-align:center;}
-header img{max-width:250px;}
-section{padding:40px;text-align:center;}
-.products{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;}
-.card{background:white;padding:20px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,0.1);width:250px;}
-/* TESTIMONIOS */
-.testimonials{background:#fff;padding:40px;border-radius:20px;margin:20px;}
-.review{display:flex;align-items:center;gap:15px;margin-bottom:20px;text-align:left;}
-.review img{width:50px;height:50px;border-radius:50%;object-fit:cover;}
-.review div{font-size:14px;}
-/* BOTON WHATSAPP */
-.whatsapp-btn{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-color:white;
-padding:15px 20px;
-border-radius:50px;
-text-decoration:none;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,0.3);
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#0f0f0f; /* 🔥 Fondo oscuro nuevo */
+  color:white;
+}
+
+/* ===== HEADER (TU LOGO SE MANTIENE) ===== */
+header{
+  background:#f4b400;
+  padding:20px;
+  text-align:center;
+  color:white;
+}
+header h1{
+  margin:0;
+  font-size:32px;
+}
+
+/* ===== CONTADOR ===== */
+.counter{
+  text-align:center;
+  padding:15px;
+  font-weight:bold;
+  color:#25D366;
+}
+
+/* ===== HERO ===== */
+.hero{
+  text-align:center;
+  padding:40px 20px;
+}
+.btn{
+  display:inline-block;
+  padding:12px 25px;
+  background:#25D366;
+  color:white;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:600;
+}
+
+/* ===== SECCIONES ===== */
+.section{
+  padding:40px 20px;
+  text-align:center;
+}
+.section h3{
+  color:#f4b400;
+}
+
+.cards{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+}
+
+.card{
+  background:#1a1a1a;
+  padding:20px;
+  width:250px;
+  border-radius:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.6);
+}
+
+/* ===== INPUTS ===== */
+input{
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  margin:5px;
+  width:90%;
+}
+
+/* ===== CARRITO ===== */
+.cart{
+  background:#111;
+  padding:20px;
+  margin:20px;
+  border-radius:15px;
+}
+
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  margin:8px 0;
+}
+
+/* ===== BOTON WHATSAPP FLOTANTE ===== */
+.float{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  padding:15px;
+  border-radius:50%;
+}
+.float a{
+  text-decoration:none;
+  font-size:20px;
+  color:black;
 }
 </style>
 </head>
 <body>
+
 <header>
-<!-- 🔥 AQUI PONE EL NOMBRE EXACTO DE TU LOGO -->
-<img src="./BackgroundEraser_20260304_034450533.png" alt="Logo">
-<h1>El Rincón de la Mila</h1>
+  <h1>El Rincón de la Mila</h1>
+  <p>Milanesas de pollo artesanales por mayor</p>
 </header>
-<section>
-<h2>Nuestros Productos</h2>
-<div class="products">
+
+<!-- 🔥 CONTADOR -->
+<div class="counter">
+🔥 +500 Clientes Satisfechos
+</div>
+
+<!-- HERO -->
+<section class="hero">
+<h2>Sabor casero, calidad premium</h2>
+<p>Venta por kilo • Doble rebozado crocante</p>
+<a class="btn" href="https://wa.me/543624505931" target="_blank">Hacer pedido</a>
+</section>
+
+<!-- PRODUCTO CON CARRITO -->
+<section class="section">
+<h3>Comprar Producto</h3>
+
+<input type="text" id="clientName" placeholder="Tu Nombre">
+<input type="number" id="quantity" placeholder="Cantidad" min="1" value="1">
+
+<div class="cards">
 <div class="card">
-<img src="./milanesa.jpg" alt="Producto" style="width:100%;border-radius:10px;">
-<h3>Milanesa de Pollo</h3>
-<p>Precio por kg: $7.000</p>
+<h4>Milanesa Clásica</h4>
+<p>$11.900</p>
+<button class="btn" onclick="addToCart()">Agregar al carrito</button>
 </div>
 </div>
-</section><!-- TESTIMONIOS CON PERFIL REAL --><section class="testimonials">
-<h2>Opiniones de Clientes</h2>
-<div class="review">
-<img src="https://i.pravatar.cc/50?img=1">
-<div>
-<strong>Juan Perez</strong><br>
-⭐ ⭐ ⭐ ⭐ ⭐<br>
-"Excelente calidad y sabor"
+</section>
+
+<!-- CARRITO -->
+<section class="section">
+<h3>🛒 Carrito</h3>
+<div class="cart">
+<div id="cartItems"></div>
+<h3>Total: $<span id="total">0</span></h3>
+<button class="btn" onclick="checkout()">🟢 Comprar Ahora</button>
 </div>
-</div><div class="review">
-<img src="https://i.pravatar.cc/50?img=2">
-<div>
-<strong>Maria Lopez</strong><br>
-⭐ ⭐ ⭐ ⭐ ⭐<br>
-"Siempre compro para mi negocio"
+</section>
+
+<!-- UBICACION -->
+<section class="section">
+<h3>📍 Ubicación</h3>
+<p>Presidencia de la Plaza, Chaco</p>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18"
+width="90%" height="250" style="border-radius:15px;border:none;"></iframe>
+</section>
+
+<!-- GALERIA ORIGINAL -->
+<section class="section">
+<h3>Galería</h3>
+<div class="cards">
+<div class="card">
+<img src="https://via.placeholder.com/250" style="width:100%;border-radius:12px;">
+<p>Milanesas frescas.</p>
 </div>
-</div><div class="review">
-<img src="https://i.pravatar.cc/50?img=3">
-<div>
-<strong>Carlos Gomez</strong><br>
-⭐ ⭐ ⭐ ⭐ ⭐<br>
-"Muy recomendado"
 </div>
+</section>
+
+<footer style="background:#333;padding:20px;text-align:center;">
+© 2026 El Rincón de la Mila  
+<p>Instagram: <a href="https://instagram.com/elrincon.delamila" target="_blank" style="color:#f4b400;">@elrincon.delamila</a></p>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
+<div class="float">
+<a href="https://wa.me/543624505931" target="_blank">💬</a>
 </div>
-</section><!-- BOTON WHATSAPP --><a class="whatsapp-btn" href="https://wa.me/543624505931" target="_blank">
-📲 Pedir por WhatsApp
-</a></body>
+
+<script>
+
+let total = 0;
+const price = 11900;
+
+function addToCart(){
+
+let name = document.getElementById("clientName").value;
+let quantity = parseInt(document.getElementById("quantity").value);
+
+if(name === ""){
+alert("Escribe tu nombre");
+return;
+}
+
+let cart = document.getElementById("cartItems");
+let itemTotal = price * quantity;
+
+let item = document.createElement("div");
+item.classList.add("cart-item");
+
+item.innerHTML = `
+<span>${name} - ${quantity}x</span>
+<span>$${itemTotal}</span>
+<button onclick="removeItem(this, ${itemTotal})">❌</button>
+`;
+
+cart.appendChild(item);
+
+total += itemTotal;
+document.getElementById("total").innerText = total;
+}
+
+function removeItem(btn, itemTotal){
+btn.parentElement.remove();
+total -= itemTotal;
+document.getElementById("total").innerText = total;
+}
+
+function checkout(){
+
+let name = document.getElementById("clientName").value;
+let items = document.querySelectorAll(".cart-item");
+
+if(items.length === 0){
+alert("Carrito vacío");
+return;
+}
+
+let message = "Hola soy " + name + ", quiero comprar:\n\n";
+
+items.forEach(item=>{
+message += item.children[0].innerText + " - " + item.children[1].innerText + "\n";
+});
+
+message += "\nTotal: $" + total;
+
+let url = "https://wa.me/543624505931?text=" + encodeURIComponent(message);
+window.open(url,"_blank");
+}
+
+</script>
+
+</body>
 </html>

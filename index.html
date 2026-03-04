@@ -5,157 +5,184 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Rincón de la Mila</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
 body{
-margin:0;
-font-family:Arial;
-background:#0f0f0f;
-color:white;
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#0f0f0f; /* 🔥 Fondo oscuro nuevo */
+  color:white;
 }
 
+/* ===== HEADER (TU LOGO SE MANTIENE) ===== */
 header{
-background:black;
-padding:20px;
-text-align:center;
-font-size:24px;
-border-bottom:2px solid #25D366;
+  background:#f4b400;
+  padding:20px;
+  text-align:center;
+  color:white;
+}
+header h1{
+  margin:0;
+  font-size:32px;
 }
 
-/* CONTADOR */
+/* ===== CONTADOR ===== */
 .counter{
-text-align:center;
-padding:15px;
-color:#25D366;
-font-weight:bold;
+  text-align:center;
+  padding:15px;
+  font-weight:bold;
+  color:#25D366;
 }
 
-/* PRODUCTO */
-.container{
-display:flex;
-justify-content:center;
-padding:20px;
+/* ===== HERO ===== */
+.hero{
+  text-align:center;
+  padding:40px 20px;
+}
+.btn{
+  display:inline-block;
+  padding:12px 25px;
+  background:#25D366;
+  color:white;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:600;
+}
+
+/* ===== SECCIONES ===== */
+.section{
+  padding:40px 20px;
+  text-align:center;
+}
+.section h3{
+  color:#f4b400;
+}
+
+.cards{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
 }
 
 .card{
-background:#1a1a1a;
-width:320px;
-border-radius:15px;
-padding:15px;
-text-align:center;
-box-shadow:0 5px 15px rgba(0,0,0,0.6);
+  background:#1a1a1a;
+  padding:20px;
+  width:250px;
+  border-radius:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.6);
 }
 
-.card img{
-width:100%;
-border-radius:10px;
-}
-
-.price{
-color:#25D366;
-font-size:22px;
-font-weight:bold;
-}
-
-/* INPUTS */
+/* ===== INPUTS ===== */
 input{
-padding:8px;
-border-radius:8px;
-border:none;
-margin:5px;
-width:90%;
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  margin:5px;
+  width:90%;
 }
 
-/* BOTONES */
-button{
-background:#25D366;
-border:none;
-padding:10px;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
-}
-
-button:hover{
-opacity:0.8;
-}
-
-/* CARRITO */
+/* ===== CARRITO ===== */
 .cart{
-background:#111;
-padding:20px;
-margin:20px;
-border-radius:15px;
+  background:#111;
+  padding:20px;
+  margin:20px;
+  border-radius:15px;
 }
 
 .cart-item{
-display:flex;
-justify-content:space-between;
-margin:8px 0;
+  display:flex;
+  justify-content:space-between;
+  margin:8px 0;
 }
 
-/* MAPA */
-iframe{
-width:90%;
-height:250px;
-border-radius:15px;
-border:none;
-}
-
-/* WHATSAPP FLOTA */
+/* ===== BOTON WHATSAPP FLOTANTE ===== */
 .float{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-padding:15px;
-border-radius:50%;
-box-shadow:0 5px 10px black;
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  padding:15px;
+  border-radius:50%;
 }
-
 .float a{
-text-decoration:none;
-font-size:20px;
-color:black;
+  text-decoration:none;
+  font-size:20px;
+  color:black;
 }
 </style>
 </head>
 <body>
 
-<header>🍗 El Rincón de la Mila</header>
+<header>
+  <h1>El Rincón de la Mila</h1>
+  <p>Milanesas de pollo artesanales por mayor</p>
+</header>
 
+<!-- 🔥 CONTADOR -->
 <div class="counter">
 🔥 +500 Clientes Satisfechos
 </div>
 
-<div class="container">
-<div class="card">
-<img src="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg">
-<h3>Milanesa de Peceto</h3>
-<p class="price">$11.900</p>
+<!-- HERO -->
+<section class="hero">
+<h2>Sabor casero, calidad premium</h2>
+<p>Venta por kilo • Doble rebozado crocante</p>
+<a class="btn" href="https://wa.me/543624505931" target="_blank">Hacer pedido</a>
+</section>
+
+<!-- PRODUCTO CON CARRITO -->
+<section class="section">
+<h3>Comprar Producto</h3>
 
 <input type="text" id="clientName" placeholder="Tu Nombre">
-
 <input type="number" id="quantity" placeholder="Cantidad" min="1" value="1">
 
-<button onclick="addToCart()">Agregar al Carrito</button>
+<div class="cards">
+<div class="card">
+<h4>Milanesa Clásica</h4>
+<p>$11.900</p>
+<button class="btn" onclick="addToCart()">Agregar al carrito</button>
 </div>
 </div>
+</section>
 
 <!-- CARRITO -->
+<section class="section">
+<h3>🛒 Carrito</h3>
 <div class="cart">
-<h2>🛒 Carrito</h2>
 <div id="cartItems"></div>
 <h3>Total: $<span id="total">0</span></h3>
-
-<button onclick="checkout()">🟢 Comprar Ahora</button>
+<button class="btn" onclick="checkout()">🟢 Comprar Ahora</button>
 </div>
+</section>
 
-<!-- MAPA -->
-<center>
-<h2>📍 Nuestra Ubicación</h2>
-<iframe src="https://www.google.com/maps/embed?pb=!1m18"></iframe>
-</center>
+<!-- UBICACION -->
+<section class="section">
+<h3>📍 Ubicación</h3>
+<p>Presidencia de la Plaza, Chaco</p>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18"
+width="90%" height="250" style="border-radius:15px;border:none;"></iframe>
+</section>
 
+<!-- GALERIA ORIGINAL -->
+<section class="section">
+<h3>Galería</h3>
+<div class="cards">
+<div class="card">
+<img src="https://via.placeholder.com/250" style="width:100%;border-radius:12px;">
+<p>Milanesas frescas.</p>
+</div>
+</div>
+</section>
+
+<footer style="background:#333;padding:20px;text-align:center;">
+© 2026 El Rincón de la Mila  
+<p>Instagram: <a href="https://instagram.com/elrincon.delamila" target="_blank" style="color:#f4b400;">@elrincon.delamila</a></p>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
 <div class="float">
 <a href="https://wa.me/543624505931" target="_blank">💬</a>
 </div>
@@ -163,6 +190,7 @@ color:black;
 <script>
 
 let total = 0;
+const price = 11900;
 
 function addToCart(){
 
@@ -174,13 +202,12 @@ alert("Escribe tu nombre");
 return;
 }
 
-let price = 11900;
 let cart = document.getElementById("cartItems");
-
 let itemTotal = price * quantity;
 
 let item = document.createElement("div");
 item.classList.add("cart-item");
+
 item.innerHTML = `
 <span>${name} - ${quantity}x</span>
 <span>$${itemTotal}</span>
@@ -218,8 +245,7 @@ message += item.children[0].innerText + " - " + item.children[1].innerText + "\n
 message += "\nTotal: $" + total;
 
 let url = "https://wa.me/543624505931?text=" + encodeURIComponent(message);
-
-window.open(url, "_blank");
+window.open(url,"_blank");
 }
 
 </script>

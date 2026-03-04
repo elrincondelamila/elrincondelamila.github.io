@@ -14,29 +14,30 @@ body{
 }
 
 header{
-  background: linear-gradient(135deg,#d62828,#9d0208);
-  color:white;
-  padding:80px 20px;
+  background:white;
   text-align:center;
+  padding:30px;
 }
 
-h1{margin:0;font-size:42px;}
+header img{
+  max-width:250px;
+}
 
 section{
-  padding:60px 20px;
+  padding:40px 20px;
   max-width:1100px;
   margin:auto;
 }
 
 .card{
   background:white;
-  padding:40px;
+  padding:30px;
   border-radius:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.08);
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
   margin-bottom:40px;
 }
 
-h2{text-align:center;margin-bottom:30px;}
+h2{text-align:center;margin-bottom:20px;}
 
 .counter{
   font-size:32px;
@@ -45,7 +46,6 @@ h2{text-align:center;margin-bottom:30px;}
   font-weight:bold;
 }
 
-/* PRODUCTOS */
 .products{
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
@@ -56,14 +56,15 @@ h2{text-align:center;margin-bottom:30px;}
   background:white;
   padding:20px;
   border-radius:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  box-shadow:0 10px 20px rgba(0,0,0,0.05);
   text-align:center;
 }
 
 .product img{
   width:100%;
   border-radius:15px;
-  margin-bottom:15px;
+  height:200px;
+  object-fit:cover;
 }
 
 button{
@@ -77,32 +78,25 @@ button{
 
 button:hover{background:#9d0208;}
 
-.cart{
-  background:#111;
-  color:white;
-  padding:20px;
-  border-radius:15px;
-}
-
 .whatsapp-float{
   position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
   width:60px;
   height:60px;
-  bottom:25px;
-  right:25px;
-  background:#25D366;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:30px;
+  font-size:28px;
   text-decoration:none;
   color:white;
 }
 
 iframe{
   width:100%;
-  height:400px;
+  height:350px;
   border:0;
   border-radius:20px;
 }
@@ -112,7 +106,8 @@ iframe{
 <body>
 
 <header>
-<h1>El Rincón de la Mila</h1>
+<!-- 🔥 TU LOGO LOCAL -->
+<img src="BackgroundEraser_20260304_034450533.png" alt="Logo">
 <p>Milanesas artesanales premium</p>
 </header>
 
@@ -129,23 +124,24 @@ iframe{
 <div class="products">
 
 <div class="product">
-<img src="https://images.unsplash.com/photo-1604908176997-4317c4c2f43c" alt="">
+<!-- 🔥 TU IMAGEN REAL DEL PRODUCTO -->
+<img src="milanesa.jpeg" alt="Milanesa">
 <h3>Milanesa de Pollo x 1kg</h3>
 <p>$8.600</p>
-<button onclick="addToCart('1kg',5600)">Agregar</button>
+<button onclick="addToCart('1kg',8600)">Agregar</button>
 </div>
 
 <div class="product">
-<img src="https://images.unsplash.com/photo-1625948515291-69613efd103f" alt="">
+<img src="milanesa.jpeg" alt="Milanesa">
 <h3>Milanesa de Pollo x 3kg</h3>
 <p>$21.000</p>
-<button onclick="addToCart('3kg',7000)">Agregar</button>
+<button onclick="addToCart('3kg',21000)">Agregar</button>
 </div>
 
 </div>
 </div>
 
-<div class="card cart">
+<div class="card">
 <h2>Carrito</h2>
 <ul id="cart-list"></ul>
 <p>Total: $<span id="total">0</span></p>
@@ -167,6 +163,7 @@ function addToCart(product,price){
   cart.push(product+" - $"+price);
   total+=price;
   document.getElementById("total").innerText=total;
+
   let li=document.createElement("li");
   li.innerText=product+" - $"+price;
   document.getElementById("cart-list").appendChild(li);
@@ -177,7 +174,7 @@ function sendWhatsApp(){
   window.open("https://wa.me/543624505931?text="+message);
 }
 
-/* CONTADOR ANIMADO */
+/* Contador animado */
 let count=0;
 let target=500;
 let counter=document.getElementById("counter");
@@ -189,7 +186,7 @@ let interval=setInterval(()=>{
     counter.innerText="+500";
     clearInterval(interval);
   }
-},30);
+},20);
 </script>
 
 </body>

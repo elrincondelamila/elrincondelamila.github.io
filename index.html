@@ -4,83 +4,190 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Rincón de la Mila</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#f4f4f4;}
-header{background:#222;color:white;padding:15px;display:flex;align-items:center;justify-content:space-between;}
-.logo{width:120px;border-radius:10px;}
-.cart-box{background:#ff6600;color:white;padding:10px 15px;border-radius:10px;text-align:center;cursor:pointer;}
-.cart-count{font-weight:bold;}
-section{padding:20px;}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
-.product{background:white;padding:15px;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);text-align:center;}
-.product img{width:100%;border-radius:10px;}
-button{padding:10px 15px;border:none;background:#ff6600;color:white;border-radius:5px;cursor:pointer;}
-button:active{transform:scale(0.95);} 
-#cart-notification{position:fixed;top:20px;right:20px;background:#28a745;color:white;padding:10px;border-radius:5px;display:none;}
-#map iframe{width:100%;height:300px;border:0;}
-.reviews{overflow:hidden;}
-.carousel{display:flex;gap:20px;animation:slide 20s linear infinite;}
-.review{min-width:250px;background:white;padding:15px;border-radius:10px;}
-@keyframes slide{0%{transform:translateX(0);}100%{transform:translateX(-50%);} }
-.contact{background:#222;color:white;text-align:center;}
-.about{background:white;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);}
+
+body{
+margin:0;
+font-family:Arial;
+background:#f4f4f4;
+color:#222;
+scroll-behavior:smooth;
+}
+
+/* HEADER */
+header{
+background:white;
+padding:20px;
+text-align:center;
+position:sticky;
+top:0;
+z-index:1000;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+header h1{
+margin:0;
+}
+
+/* PROMO */
+.promo{
+background:#111;
+color:white;
+text-align:center;
+padding:10px;
+font-weight:bold;
+}
+
+/* SECCIONES */
+section{
+padding:60px 20px;
+max-width:1200px;
+margin:auto;
+}
+
+/* MAPA */
+.mapa iframe{
+width:100%;
+height:300px;
+border:0;
+border-radius:12px;
+}
+
+/* BOTONES */
+a.btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 15px;
+background:black;
+color:white;
+text-decoration:none;
+border-radius:8px;
+}
+
+/* PRODUCTOS */
+.productos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:15px;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+/* FOOTER */
+footer{
+background:#111;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+.carrito{
+position:fixed;
+right:20px;
+top:20px;
+background:white;
+padding:10px;
+border-radius:50%;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
 </style>
 </head>
 <body>
+
+<div class="promo">
+🚀 +500 Clientes Satisfechos  
+<br>
+Calidad Premium • Empanado Artesanal • Entrega Rápida
+</div>
+
 <header>
-<img src="BackgroundEraser_20260304_034450533.png" class="logo">
-<div class="cart-box" onclick="finalizarCompra()">
-🛒 <span class="cart-count" id="cartCount">0</span>
-<br>Finalizar Compra
-</div>
+<h1>El Rincón de la Mila</h1>
 </header>
-<div id="cart-notification">Producto agregado ✔</div>
-<section class="products">
-<script>
-const products=[{kg:3,price:18000},{kg:5,price:30000},{kg:10,price:60000},{kg:15,price:87000},{kg:25,price:135000}];
-document.write(products.map(p=>`
-<div class='product'>
-<img src='Milanesapollo.jpeg'>
-<h3>${p.kg} KG</h3>
-<p>Precio: $${p.price}</p>
-<button onclick="addToCart('${p.kg}',${p.price})">Añadir al carrito</button>
+
+<div class="carrito">
+🛒 <span id="cantidad">0</span>
 </div>
-`).join(''));
-let cart=[];
-function addToCart(kg,price){
-cart.push({kg,price});
-document.getElementById('cartCount').innerText=cart.length;
-const notif=document.getElementById('cart-notification');
-notif.style.display='block';
-navigator.vibrate && navigator.vibrate(200);
-setTimeout(()=>{notif.style.display='none';},2000);
-}
-function finalizarCompra(){
-if(cart.length===0){alert('Carrito vacío');return;}
-let mensaje='Hola quiero finalizar mi compra:%0A';
-cart.forEach(item=>{mensaje+=item.kg+' KG - $'+item.price+'%0A';});
-let url='https://wa.me/5493624505931?text='+mensaje;
-window.open(url,'_blank');
-}
-</script>
-</section>
-<section class="about">
-<h2>Quienes Somos</h2>
-<p>Somos un emprendimiento de milanesas en Barranqueras, Chaco.</p>
-<p>📍 Miguel Cane 2575, Barranqueras, Chaco</p>
-<p>🔗 <a href="https://maps.app.goo.gl/VbsqyZ4tK8SRHxdJA" target="_blank">Ver en Google Maps</a></p>
-</section>
-<section id="map">
+
+<!-- MAPA (AHORA ANTES DE QUIENES SOMOS) -->
+<section class="mapa">
 <h2>Ubicación</h2>
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d" allowfullscreen></iframe>
+
+<iframe 
+src="https://www.google.com/maps?q=Miguel+Cane+2575,+Barranqueras,+Chaco&output=embed">
+</iframe>
+
 </section>
-<section class="reviews">
-<h2>Reseñas</h2>
-<div class="carousel">
-<div class="review">⭐ Excelente producto</div>
-<div class="review">⭐ Muy buena calidad</div>
-<div class="review">⭐ Recomiendo comprar</div>
+
+<!-- QUIENES SOMOS -->
+<section>
+<h2>Quienes Somos</h2>
+<p>
+Somos un emprendimiento de milanesas en Barranqueras, Chaco.
+</p>
+<p>
+📍 Miguel Cane 2575, Barranqueras, Chaco
+</p>
+
+<a class="btn" 
+href="https://www.google.com/maps?q=Miguel+Cane+2575,+Barranqueras,+Chaco" 
+target="_blank">
+Ver en Google Maps
+</a>
+
+</section>
+
+<!-- PRODUCTOS -->
+<section>
+<h2>Productos</h2>
+
+<div class="productos">
+
+<div class="card">
+<h3>Mila Clásica</h3>
+<p>$____</p>
+<button onclick="agregar()">Agregar</button>
 </div>
+
+<div class="card">
+<h3>Mila Completa</h3>
+<p>$____</p>
+<button onclick="agregar()">Agregar</button>
+</div>
+
+</div>
+
 </section>
+
+<!-- RESEÑAS -->
+<section>
+<h2>Reseñas</h2>
+<p>⭐⭐⭐⭐⭐</p>
+</section>
+
+<footer>
+© 2026 El Rincón de la Mila
+<br>
+📲 3624505931
+</footer>
+
+<script>
+
+let contador = 0;
+
+function agregar(){
+contador++;
+document.getElementById("cantidad").innerText = contador;
+}
+
+</script>
+
 </body>
 </html>

@@ -6,8 +6,10 @@
 <title>El Rincón de la Mila</title>
 <style>
 body{margin:0;font-family:Arial;background:#f4f4f4;}
-header{background:#222;color:white;padding:20px;text-align:center;}
+header{background:#222;color:white;padding:15px;display:flex;align-items:center;justify-content:space-between;}
 .logo{width:120px;border-radius:10px;}
+.cart-box{background:#ff6600;color:white;padding:10px 15px;border-radius:10px;text-align:center;cursor:pointer;}
+.cart-count{font-weight:bold;}
 section{padding:20px;}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
 .product{background:white;padding:15px;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);text-align:center;}
@@ -15,7 +17,7 @@ section{padding:20px;}
 button{padding:10px 15px;border:none;background:#ff6600;color:white;border-radius:5px;cursor:pointer;}
 button:active{transform:scale(0.95);} 
 #cart-notification{position:fixed;top:20px;right:20px;background:#28a745;color:white;padding:10px;border-radius:5px;display:none;}
-#map{width:100%;height:300px;}
+#map iframe{width:100%;height:300px;border:0;}
 .reviews{overflow:hidden;}
 .carousel{display:flex;gap:20px;animation:slide 20s linear infinite;}
 .review{min-width:250px;background:white;padding:15px;border-radius:10px;}
@@ -27,59 +29,58 @@ button:active{transform:scale(0.95);}
 <body>
 <header>
 <img src="BackgroundEraser_20260304_034450533.png" class="logo">
-<h1>El Rincón de la Mila</h1>
+<div class="cart-box" onclick="finalizarCompra()">
+🛒 <span class="cart-count" id="cartCount">0</span>
+<br>Finalizar Compra
+</div>
 </header>
 <div id="cart-notification">Producto agregado ✔</div>
 <section class="products">
 <script>
-const products=[3,5,10,15,25];
+const products=[{kg:3,price:5000},{kg:5,price:8000},{kg:10,price:15000},{kg:15,price:22000},{kg:25,price:35000}];
 document.write(products.map(p=>`
 <div class='product'>
 <img src='Milanesapollo.jpeg'>
-<h3>${p} KG</h3>
-<p>Deliciosa milanesa</p>
-<button onclick="addToCart('${p}')">Añadir al carrito</button>
+<h3>${p.kg} KG</h3>
+<p>Precio: $${p.price}</p>
+<button onclick="addToCart('${p.kg}',${p.price})">Añadir al carrito</button>
 </div>
 `).join(''));
-function addToCart(p){
+let cart=[];
+function addToCart(kg,price){
+cart.push({kg,price});
+document.getElementById('cartCount').innerText=cart.length;
 const notif=document.getElementById('cart-notification');
 notif.style.display='block';
 navigator.vibrate && navigator.vibrate(200);
 setTimeout(()=>{notif.style.display='none';},2000);
-window.cartItems=window.cartItems||[];
-cartItems.push(p);
+}
+function finalizarCompra(){
+if(cart.length===0){alert('Carrito vacío');return;}
+let mensaje='Hola quiero finalizar mi compra:%0A';
+cart.forEach(item=>{mensaje+=item.kg+' KG - $'+item.price+'%0A';});
+let url='https://wa.me/5493624505931?text='+mensaje;
+window.open(url,'_blank');
 }
 </script>
 </section>
 <section class="about">
 <h2>Quienes Somos</h2>
-<p>Somos un emprendimiento dedicado a ofrecer milanesas de excelente calidad en distintos tamaños para toda la familia.</p>
+<p>Somos un emprendimiento de milanesas en Barranqueras, Chaco.</p>
+<p>📍 Miguel Cane 2575, Barranqueras, Chaco</p>
+<p>🔗 <a href="https://maps.app.goo.gl/VbsqyZ4tK8SRHxdJA" target="_blank">Ver en Google Maps</a></p>
 </section>
-<section>
-<h2 style="text-align:center;">Ubicación</h2>
-<div id="map">
-<iframe width="100%" height="300" src="https://www.google.com/maps/embed?pb=!1m18" style="border:0;"></iframe>
-</div>
+<section id="map">
+<h2>Ubicación</h2>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d" allowfullscreen></iframe>
 </section>
 <section class="reviews">
 <h2>Reseñas</h2>
 <div class="carousel">
-<div class="review">⭐ Excelente producto!</div>
+<div class="review">⭐ Excelente producto</div>
 <div class="review">⭐ Muy buena calidad</div>
 <div class="review">⭐ Recomiendo comprar</div>
 </div>
 </section>
-<section class="contact">
-<h2>Contacto</h2>
-<p>WhatsApp: +54 0000 0000</p>
-<button onclick="finalizarCompra()">Finalizar Compra por WhatsApp</button>
-</section>
-<script>
-function finalizarCompra(){
-let mensaje='Hola quiero finalizar mi compra: '+(window.cartItems||[]).join(', ');
-let url='https://wa.me/549000000000?text='+encodeURIComponent(mensaje);
-window.open(url,'_blank');
-}
-</script>
 </body>
 </html>

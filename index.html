@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>El Rincón de la Mila</title>
+
+<meta name="theme-color" content="#d62828">
+
+<link rel="manifest" href="manifest.json">
 
 <style>
 
@@ -223,6 +228,7 @@ text-decoration:none;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -267,9 +273,7 @@ text-decoration:none;
 </div>
 
 <div class="search">
-
 <input type="text" placeholder="Buscar producto..." onkeyup="searchProducts(this.value)">
-
 </div>
 
 <div class="products" id="products"></div>
@@ -313,16 +317,15 @@ Total: $<span id="total">0</span>
 <div class="navbar">
 
 <div>🏠</div>
-
 <div>🍗</div>
-
 <div>⭐</div>
-
 <div>📞</div>
 
 </div>
 
 <script>
+
+/* PRODUCTOS */
 
 let products=[
 {name:"Milanesa 1kg",price:8000},
@@ -395,7 +398,7 @@ if(q==0)return;
 
 cart[name]=(cart[name]||0)+q;
 
-renderCart(price,name,q);
+renderCart();
 
 document.getElementById("q-"+name).innerText=0;
 
@@ -404,13 +407,11 @@ document.getElementById("q-"+name).innerText=0;
 function renderCart(){
 
 let html="";
-
 let total=0;
 
 for(let p in cart){
 
 let price=products.find(x=>x.name==p).price;
-
 let q=cart[p];
 
 total+=price*q;
@@ -432,9 +433,7 @@ function sendOrder(){
 let msg="Hola quiero pedir:%0A";
 
 for(let p in cart){
-
 msg+=p+" x"+cart[p]+"%0A";
-
 }
 
 msg+="Total: $"+document.getElementById("total").innerText;
@@ -472,9 +471,7 @@ let r=JSON.parse(localStorage.getItem("reviews"))||[];
 let html="";
 
 r.forEach(x=>{
-
 html+=`<p><b>${x.name}</b> ⭐⭐⭐⭐⭐<br>${x.comment}</p>`;
-
 });
 
 document.getElementById("review-list").innerHTML=html;
@@ -488,7 +485,6 @@ function addReview(e){
 e.preventDefault();
 
 let name=document.getElementById("name").value;
-
 let comment=document.getElementById("comment").value;
 
 let r=JSON.parse(localStorage.getItem("reviews"))||[];
@@ -499,6 +495,12 @@ localStorage.setItem("reviews",JSON.stringify(r));
 
 loadReviews();
 
+}
+
+/* APP INSTALABLE */
+
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('service-worker.js');
 }
 
 </script>

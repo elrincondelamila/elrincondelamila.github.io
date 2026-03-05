@@ -9,9 +9,8 @@
 
 body{
 margin:0;
-font-family:Arial, sans-serif;
+font-family:Arial;
 background:#fafafa;
-color:#222;
 }
 
 /* HEADER */
@@ -19,30 +18,25 @@ color:#222;
 header{
 background:#d62828;
 color:white;
-padding:20px;
 text-align:center;
+padding:20px;
 }
 
 header img{
-width:180px;
+width:170px;
 }
 
 /* HERO */
 
 .hero{
-padding:30px;
 text-align:center;
+padding:20px;
 }
 
 .hero img{
 width:100%;
 max-width:500px;
 border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
-}
-
-.hero h2{
-margin-top:15px;
 }
 
 /* CONTADOR */
@@ -53,7 +47,6 @@ justify-content:center;
 gap:40px;
 padding:20px;
 background:white;
-box-shadow:0 5px 20px rgba(0,0,0,0.08);
 }
 
 .stat{
@@ -61,30 +54,23 @@ text-align:center;
 }
 
 .stat h3{
-margin:0;
 color:#d62828;
 font-size:28px;
+margin:0;
 }
 
-.stat p{
-margin:5px 0;
-font-size:14px;
-}
-
-/* SECTIONS */
+/* PRODUCTOS */
 
 .section{
-padding:30px;
+padding:25px;
 max-width:1100px;
 margin:auto;
 }
 
-/* PRODUCTS */
-
 .products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:20px;
 }
 
 .product{
@@ -92,11 +78,6 @@ background:white;
 border-radius:15px;
 box-shadow:0 5px 20px rgba(0,0,0,0.1);
 overflow:hidden;
-transition:0.3s;
-}
-
-.product:hover{
-transform:translateY(-5px);
 }
 
 .product img{
@@ -128,10 +109,9 @@ margin-bottom:10px;
 button{
 background:#25D366;
 border:none;
-padding:12px;
+padding:10px;
 width:100%;
 color:white;
-font-size:16px;
 border-radius:10px;
 cursor:pointer;
 }
@@ -140,23 +120,28 @@ button:hover{
 background:#1ebe5d;
 }
 
-/* BENEFITS */
+/* CARRITO */
 
-.benefits{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
-text-align:center;
-}
-
-.benefit{
+.cart{
+position:fixed;
+top:20px;
+right:20px;
 background:white;
-padding:20px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,0.08);
+padding:15px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
+width:220px;
 }
 
-/* REVIEWS */
+.cart h4{
+margin-top:0;
+}
+
+.cart button{
+margin-top:10px;
+}
+
+/* RESEÑAS */
 
 .reviews{
 background:white;
@@ -170,13 +155,19 @@ border-bottom:1px solid #eee;
 padding:10px 0;
 }
 
-.review:last-child{
-border:none;
-}
-
 .stars{
 color:#ff9800;
-font-size:18px;
+}
+
+/* FORM */
+
+input,textarea{
+width:100%;
+padding:8px;
+margin-top:5px;
+margin-bottom:10px;
+border-radius:6px;
+border:1px solid #ccc;
 }
 
 /* WHATSAPP */
@@ -195,7 +186,6 @@ justify-content:center;
 font-size:30px;
 color:white;
 text-decoration:none;
-box-shadow:0 5px 20px rgba(0,0,0,0.2);
 }
 
 /* FOOTER */
@@ -204,7 +194,6 @@ footer{
 text-align:center;
 padding:30px;
 color:#666;
-font-size:14px;
 }
 
 </style>
@@ -229,12 +218,10 @@ font-size:14px;
 
 <h2>Las milanesas más ricas de Barranqueras</h2>
 
-<p>Calidad premium • Empanado artesanal • Entrega rápida</p>
-
 </div>
 
 
-<!-- ESTADISTICAS -->
+<!-- CONTADOR -->
 
 <div class="stats">
 
@@ -244,14 +231,22 @@ font-size:14px;
 </div>
 
 <div class="stat">
-<h3>+2</h3>
-<p>Años vendiendo</p>
+<h3 id="visits">0</h3>
+<p>Visitas a la web</p>
 </div>
 
-<div class="stat">
-<h3>+1000kg</h3>
-<p>Milanesas vendidas</p>
 </div>
+
+
+<!-- CARRITO -->
+
+<div class="cart">
+
+<h4>🛒 Carrito</h4>
+
+<div id="cart-items"></div>
+
+<button onclick="sendOrder()">Finalizar pedido</button>
 
 </div>
 
@@ -275,7 +270,9 @@ font-size:14px;
 
 <p class="price">$8.000</p>
 
-<button onclick="order('1kg - $8.000')">Pedir</button>
+<input type="number" id="q1" value="1" min="1">
+
+<button onclick="addCart('1kg',8000,'q1')">Agregar</button>
 
 </div>
 
@@ -294,7 +291,9 @@ font-size:14px;
 
 <p class="price">$18.000</p>
 
-<button onclick="order('3kg - $18.000')">Pedir</button>
+<input type="number" id="q2" value="1" min="1">
+
+<button onclick="addCart('3kg',18000,'q2')">Agregar</button>
 
 </div>
 
@@ -311,7 +310,9 @@ font-size:14px;
 
 <p class="price">$55.000</p>
 
-<button onclick="order('10kg - $55.000')">Pedir</button>
+<input type="number" id="q3" value="1" min="1">
+
+<button onclick="addCart('10kg',55000,'q3')">Agregar</button>
 
 </div>
 
@@ -328,7 +329,9 @@ font-size:14px;
 
 <p class="price">$120.000</p>
 
-<button onclick="order('25kg - $120.000')">Pedir</button>
+<input type="number" id="q4" value="1" min="1">
+
+<button onclick="addCart('25kg',120000,'q4')">Agregar</button>
 
 </div>
 
@@ -340,75 +343,36 @@ font-size:14px;
 </div>
 
 
-<!-- BENEFICIOS -->
-
-<div class="section">
-
-<h2>¿Por qué elegirnos?</h2>
-
-<div class="benefits">
-
-<div class="benefit">
-<h3>🥩 Carne seleccionada</h3>
-<p>Elegimos los mejores cortes.</p>
-</div>
-
-<div class="benefit">
-<h3>👨‍🍳 Empanado artesanal</h3>
-<p>Preparadas como en casa.</p>
-</div>
-
-<div class="benefit">
-<h3>❄️ Congelado fresco</h3>
-<p>Conserva sabor y calidad.</p>
-</div>
-
-<div class="benefit">
-<h3>🚚 Entrega rápida</h3>
-<p>Pedidos por WhatsApp.</p>
-</div>
-
-</div>
-
-</div>
-
-
-<!-- OPINIONES -->
+<!-- RESEÑAS -->
 
 <div class="section">
 
 <h2>Opiniones de clientes</h2>
 
-<div class="reviews">
+<div class="reviews" id="reviews"></div>
 
-<div class="review">
-<strong>Juan M.</strong>
-<div class="stars">★★★★★</div>
-<p>Muy tiernas, súper recomendadas.</p>
-</div>
+<h3>Dejar opinión</h3>
 
-<div class="review">
-<strong>Carla G.</strong>
-<div class="stars">★★★★★</div>
-<p>Compré 3kg y rinden muchísimo.</p>
-</div>
+<input id="name" placeholder="Tu nombre">
 
-<div class="review">
-<strong>Matías R.</strong>
-<div class="stars">★★★★☆</div>
-<p>Excelente calidad.</p>
-</div>
+<select id="rating">
 
-</div>
+<option value="★★★★★">★★★★★</option>
+<option value="★★★★☆">★★★★☆</option>
+<option value="★★★☆☆">★★★☆☆</option>
+
+</select>
+
+<textarea id="comment" placeholder="Tu comentario"></textarea>
+
+<button onclick="addReview()">Publicar</button>
 
 </div>
 
 
 <footer>
 
-Miguel Cane 2575 · Barranqueras · Chaco  
-<br><br>
-© 2026 El Rincón de la Mila
+Miguel Cane 2575 · Barranqueras · Chaco
 
 </footer>
 
@@ -418,13 +382,108 @@ Miguel Cane 2575 · Barranqueras · Chaco
 
 <script>
 
-function order(product){
+/* CONTADOR VISITAS */
 
-let msg="Hola quiero pedir milanesas: "+product;
+let visits=localStorage.getItem("visits");
+
+visits=visits?parseInt(visits)+1:1;
+
+localStorage.setItem("visits",visits);
+
+document.getElementById("visits").innerText=visits;
+
+
+/* CARRITO */
+
+let cart=[];
+
+function addCart(name,price,qid){
+
+let q=document.getElementById(qid).value;
+
+cart.push({name,price,quantity:q});
+
+renderCart();
+
+}
+
+function renderCart(){
+
+let html="";
+
+cart.forEach(p=>{
+
+html+=p.name+" x"+p.quantity+"<br>";
+
+});
+
+document.getElementById("cart-items").innerHTML=html;
+
+}
+
+
+function sendOrder(){
+
+let msg="Hola quiero pedir:%0A";
+
+cart.forEach(p=>{
+
+msg+=p.name+" x"+p.quantity+"%0A";
+
+});
 
 window.open("https://wa.me/543624505931?text="+msg);
 
 }
+
+
+/* RESEÑAS */
+
+let reviews=JSON.parse(localStorage.getItem("reviews"))||[];
+
+function renderReviews(){
+
+let html="";
+
+reviews.forEach(r=>{
+
+html+=`
+
+<div class="review">
+
+<strong>${r.name}</strong>
+
+<div class="stars">${r.rating}</div>
+
+<p>${r.comment}</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("reviews").innerHTML=html;
+
+}
+
+function addReview(){
+
+let name=document.getElementById("name").value;
+
+let rating=document.getElementById("rating").value;
+
+let comment=document.getElementById("comment").value;
+
+reviews.push({name,rating,comment});
+
+localStorage.setItem("reviews",JSON.stringify(reviews));
+
+renderReviews();
+
+}
+
+renderReviews();
 
 </script>
 

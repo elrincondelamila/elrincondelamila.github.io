@@ -1,137 +1,193 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Rincón de la Mila</title>
+
 <style>
+body{
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background:#f4f4f4;
+  color:#222;
+}
 
-body{margin:0;font-family:Arial;background:#f4f4f4;}
+header{
+  background:white;
+  text-align:center;
+  padding:30px;
+}
 
-header{background:#222;color:white;padding:15px;display:flex;align-items:center;justify-content:space-between;}
+header img{
+  max-width:250px;
+}
 
-.logo{width:120px;border-radius:10px;}
+section{
+  padding:40px 20px;
+  max-width:1100px;
+  margin:auto;
+}
 
-.cart-box{background:#ff6600;color:white;padding:10px 15px;border-radius:10px;text-align:center;cursor:pointer;}
+.card{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  margin-bottom:40px;
+}
 
-.cart-count{font-weight:bold;}
+h2{text-align:center;margin-bottom:20px;}
 
-section{padding:20px;}
+.counter{
+  font-size:32px;
+  text-align:center;
+  color:#d62828;
+  font-weight:bold;
+}
 
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+.products{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap:30px;
+}
 
-.product{background:white;padding:15px;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);text-align:center;}
+.product{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.05);
+  text-align:center;
+}
 
-.product img{width:100%;border-radius:10px;}
+.product img{
+  width:100%;
+  border-radius:15px;
+  height:200px;
+  object-fit:cover;
+}
 
-button{padding:10px 15px;border:none;background:#ff6600;color:white;border-radius:5px;cursor:pointer;}
+button{
+  background:#d62828;
+  color:white;
+  border:none;
+  padding:10px 20px;
+  border-radius:8px;
+  cursor:pointer;
+}
 
-button:active{transform:scale(0.95);} 
+button:hover{background:#9d0208;}
 
-#cart-notification{position:fixed;top:20px;right:20px;background:#28a745;color:white;padding:10px;border-radius:5px;display:none;}
+.whatsapp-float{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  text-decoration:none;
+  color:white;
+}
 
-#map iframe{width:100%;height:300px;border:0;border-radius:10px;}
-
-.reviews{overflow:hidden;}
-
-.carousel{display:flex;gap:20px;animation:slide 20s linear infinite;}
-
-.review{min-width:250px;background:white;padding:15px;border-radius:10px;}
-
-@keyframes slide{0%{transform:translateX(0);}100%{transform:translateX(-50%);} }
-
-.contact{background:#222;color:white;text-align:center;}
-
-.about{background:white;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);}
-
+iframe{
+  width:100%;
+  height:350px;
+  border:0;
+  border-radius:20px;
+}
 </style>
 </head>
+
 <body>
 
 <header>
-<img src="BackgroundEraser_20260304_034450533.png" class="logo">
-
-<div class="cart-box" onclick="finalizarCompra()">
-🛒 <span class="cart-count" id="cartCount">0</span>
-<br>Finalizar Compra
-</div>
-
+<!-- 🔥 TU LOGO LOCAL -->
+<img src="BackgroundEraser_20260304_034450533.png" alt="Logo">
+<p>Milanesas artesanales premium</p>
 </header>
 
-<div id="cart-notification">Producto agregado ✔</div>
+<section>
 
-<!-- 🔥 AGREGADO: CLIENTES Y FRASE -->
-<section style="text-align:center;font-weight:bold;">
-<h2>+500 Clientes Satisfechos</h2>
-<p>Calidad Premium • Empanado Artesanal • Entrega Rápida</p>
-</section>
+<div class="card">
+<h2>+ Clientes Satisfechos</h2>
+<div class="counter" id="counter">0</div>
+</div>
 
-<!-- 🔥 MAPA AHORA VA ANTES DE QUIENES SOMOS -->
-<section id="map">
+<div class="card">
+<h2>Nuestros Productos</h2>
+
+<div class="products">
+
+<div class="product">
+<!-- 🔥 TU IMAGEN REAL DEL PRODUCTO -->
+<img src="Milanesapollo.jpeg" alt="Milanesa">
+<h3>Milanesa de Pollo x 1kg</h3>
+<p>$8.000</p>
+<button onclick="addToCart('1kg',8600)">Agregar</button>
+</div>
+
+<div class="product">
+<img src="Milanesapollo.jpeg" alt="Milanesa">
+<h3>Milanesa de Pollo x 3kg</h3>
+<p>$20.400</p>
+<button onclick="addToCart('3kg',21000)">Agregar</button>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<h2>Carrito</h2>
+<ul id="cart-list"></ul>
+<p>Total: $<span id="total">0</span></p>
+<button onclick="sendWhatsApp()">Finalizar Compra</button>
+</div>
+
 <h2>Ubicación</h2>
-<iframe 
-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d"
-allowfullscreen>
-</iframe>
+<iframe src="https://www.google.com/maps?q=Miguel%20Cane%202575,%20Barranqueras,%20Chaco&output=embed"></iframe>
+
 </section>
 
-<section class="products">
+<a href="https://wa.me/543624505931" class="whatsapp-float">💬</a>
+
 <script>
-
-const products=[
-{kg:3,price:5000},
-{kg:5,price:8000},
-{kg:10,price:15000},
-{kg:15,price:22000},
-{kg:25,price:35000}
-];
-
-document.write(products.map(p=>`
-<div class='product'>
-<img src='Milanesapollo.jpeg'>
-<h3>${p.kg} KG</h3>
-<p>Precio: $${p.price}</p>
-<button onclick="addToCart('${p.kg}',${p.price})">Añadir al carrito</button>
-</div>
-`).join(''));
-
 let cart=[];
+let total=0;
 
-function addToCart(kg,price){
-cart.push({kg,price});
-document.getElementById('cartCount').innerText=cart.length;
-const notif=document.getElementById('cart-notification');
-notif.style.display='block';
-navigator.vibrate && navigator.vibrate(200);
-setTimeout(()=>{notif.style.display='none';},2000);
+function addToCart(product,price){
+  cart.push(product+" - $"+price);
+  total+=price;
+  document.getElementById("total").innerText=total;
+
+  let li=document.createElement("li");
+  li.innerText=product+" - $"+price;
+  document.getElementById("cart-list").appendChild(li);
 }
 
-function finalizarCompra(){
-if(cart.length===0){alert('Carrito vacío');return;}
-let mensaje='Hola quiero finalizar mi compra:%0A';
-cart.forEach(item=>{mensaje+=item.kg+' KG - $'+item.price+'%0A';});
-let url='https://wa.me/5493624505931?text='+mensaje;
-window.open(url,'_blank');
+function sendWhatsApp(){
+  let message="Hola! Quiero comprar:%0A"+cart.join("%0A")+"%0ATotal: $"+total;
+  window.open("https://wa.me/543624505931?text="+message);
 }
 
+/* Contador animado */
+let count=0;
+let target=500;
+let counter=document.getElementById("counter");
+
+let interval=setInterval(()=>{
+  count+=5;
+  counter.innerText="+"+count;
+  if(count>=target){
+    counter.innerText="+500";
+    clearInterval(interval);
+  }
+},20);
 </script>
-</section>
-
-<section class="about">
-<h2>Quienes Somos</h2>
-<p>Somos un emprendimiento de milanesas en Barranqueras, Chaco.</p>
-<p>📍 Miguel Cane 2575, Barranqueras, Chaco</p>
-<p>🔗 <a href="https://maps.app.goo.gl/VbsqyZ4tK8SRHxdJA" target="_blank">Ver en Google Maps</a></p>
-</section>
-
-<section class="reviews">
-<h2>Reseñas</h2>
-<div class="carousel">
-<div class="review">⭐ Excelente producto</div>
-<div class="review">⭐ Muy buena calidad</div>
-<div class="review">⭐ Recomiendo comprar</div>
-</div>
-</section>
 
 </body>
 </html>

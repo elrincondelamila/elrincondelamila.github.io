@@ -1,417 +1,446 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>El Rincón de la Mila</title>
 
-<link rel="icon" href="BackgroundEraser_20260304_034450533.png">
-
-<link rel="manifest" href="data:application/manifest+json,{
-'name':'El Rincon de la Mila',
-'short_name':'La Mila',
-'start_url':'./',
-'display':'standalone',
-'background_color':'#ffffff',
-'theme_color':'#d62828',
-'icons':[{
-'src':'BackgroundEraser_20260304_034450533.png',
-'sizes':'192x192',
-'type':'image/png'
-}]
-}">
-
 <style>
 
 body{
 margin:0;
-font-family:Arial;
-background:#f5f5f5;
+font-family:Segoe UI;
+background:#f4f4f4;
+color:#222;
+transition:0.3s;
 }
 
-/* NAVBAR */
-
-.navbar{
-background:#d62828;
+.dark{
+background:#121212;
 color:white;
-padding:15px;
+}
+
+#loader{
+position:fixed;
+width:100%;
+height:100%;
+background:#ff6b00;
 display:flex;
+justify-content:center;
 align-items:center;
+color:white;
+font-size:28px;
+z-index:9999;
+}
+
+header{
+background:white;
+padding:15px 25px;
+display:flex;
 justify-content:space-between;
+align-items:center;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
 position:sticky;
 top:0;
-z-index:1000;
 }
 
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
+.dark header{
+background:#1e1e1e;
 }
-
-.logo img{
-width:40px;
-}
-
-.cart{
-background:white;
-color:#d62828;
-padding:5px 10px;
-border-radius:10px;
-font-weight:bold;
-}
-
-/* HERO */
 
 .hero{
-padding:20px;
+height:420px;
+background:url("milanesapollo.jpeg") center/cover;
+display:flex;
+align-items:center;
+justify-content:center;
 text-align:center;
+color:white;
 }
 
-.hero img{
-width:100%;
-max-width:500px;
-border-radius:20px;
+.hero h1{
+font-size:40px;
+background:rgba(0,0,0,0.5);
+padding:20px;
+border-radius:10px;
 }
 
-/* BUSCADOR */
-
-.search{
-padding:15px;
-max-width:600px;
+.section{
+padding:40px 20px;
+max-width:1000px;
 margin:auto;
 }
 
-.search input{
-width:100%;
-padding:12px;
-border-radius:10px;
-border:1px solid #ccc;
-font-size:16px;
-}
-
-/* PRODUCTOS */
-
 .products{
-padding:20px;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
 }
 
-.product{
+.card{
 background:white;
-border-radius:15px;
-overflow:hidden;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+border-radius:10px;
+padding:20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+text-align:center;
 }
 
-.product img{
+.dark .card{
+background:#1e1e1e;
+}
+
+.card img{
 width:100%;
-height:200px;
-object-fit:cover;
-}
-
-.product-info{
-padding:15px;
+border-radius:8px;
 }
 
 .price{
-color:#d62828;
-font-weight:bold;
 font-size:20px;
+margin:10px 0;
+font-weight:bold;
 }
 
-button{
-margin-top:10px;
-width:100%;
-padding:12px;
-background:#25D366;
-border:none;
+.qty{
+display:flex;
+justify-content:center;
+gap:10px;
+margin:10px 0;
+}
+
+.qty button{
+background:#333;
 color:white;
-border-radius:10px;
-font-size:16px;
+padding:5px 10px;
 }
 
-/* CARRITO */
-
-.cart-panel{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:white;
-padding:15px;
-box-shadow:0 -5px 20px rgba(0,0,0,0.15);
-display:none;
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:10px;
 }
 
-.cart-panel button{
-background:#d62828;
+.gallery img{
+width:100%;
+border-radius:8px;
 }
-
-/* RESEÑAS */
 
 .reviews{
-padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
 }
 
 .review{
 background:white;
-padding:15px;
+padding:20px;
 border-radius:10px;
-margin-bottom:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+display:flex;
+gap:10px;
+}
+
+.dark .review{
+background:#1e1e1e;
+}
+
+.review img{
+width:50px;
+height:50px;
+border-radius:50%;
 }
 
 .stars{
-color:#ff9800;
+color:gold;
 }
 
-/* WHATSAPP */
-
-.whatsapp{
-position:fixed;
-bottom:90px;
-right:20px;
-background:#25D366;
-width:60px;
-height:60px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-color:white;
-text-decoration:none;
-}
-
-footer{
+.counter{
 text-align:center;
-padding:30px;
-color:#777;
+font-size:40px;
+font-weight:bold;
+margin:40px 0;
+}
+
+.cart{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff6b00;
+color:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.review-form input, .review-form textarea{
+width:100%;
+padding:10px;
+margin:5px 0;
+border-radius:5px;
+border:1px solid #ccc;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="navbar">
+<div id="loader">Cargando...</div>
 
-<div class="logo">
-<img src="BackgroundEraser_20260304_034450533.png">
-<strong>El Rincón de la Mila</strong>
+<header>
+
+<h2>El Rincón de la Mila</h2>
+
+<button onclick="modoOscuro()">Modo oscuro</button>
+
+</header>
+
+<div class="hero">
+<h1>Las mejores milanesas de Barranqueras</h1>
+</div>
+
+<div class="section">
+
+<div class="counter">
+<span id="contador">0</span> clientes satisfechos
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Productos</h2>
+
+<div class="products">
+
+<div class="card">
+
+<img src="milanesapollo.jpeg">
+
+<h3>Milanesa de Pollo</h3>
+
+<div class="price">$4500</div>
+
+<div class="qty">
+
+<button onclick="cambiar('pollo',-1)">-</button>
+<span id="pollo">0</span>
+<button onclick="cambiar('pollo',1)">+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="milanesapollo.jpeg">
+
+<h3>Milanesa Napolitana</h3>
+
+<div class="price">$5200</div>
+
+<div class="qty">
+
+<button onclick="cambiar('napo',-1)">-</button>
+<span id="napo">0</span>
+<button onclick="cambiar('napo',1)">+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Galería</h2>
+
+<div class="gallery">
+
+<img src="milanesapollo.jpeg">
+<img src="milanesapollo.jpeg">
+<img src="milanesapollo.jpeg">
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Opiniones de clientes</h2>
+
+<div class="reviews" id="reviews">
+
+<div class="review">
+<img src="https://randomuser.me/api/portraits/women/32.jpg">
+<div>
+<strong>Carla Gómez</strong>
+<div class="stars">★★★★★</div>
+<p>Las mejores milanesas que probé.</p>
+</div>
+</div>
+
+<div class="review">
+<img src="https://randomuser.me/api/portraits/men/45.jpg">
+<div>
+<strong>Matías Fernández</strong>
+<div class="stars">★★★★★</div>
+<p>Excelente atención y calidad.</p>
+</div>
+</div>
+
+</div>
+
+<h3>Dejar reseña</h3>
+
+<div class="review-form">
+
+<input id="nombre" placeholder="Tu nombre">
+
+<textarea id="comentario" placeholder="Tu opinión"></textarea>
+
+<button onclick="agregarReview()">Enviar reseña</button>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Ubicación</h2>
+
+<iframe
+width="100%"
+height="300"
+style="border:0"
+loading="lazy"
+allowfullscreen
+src="https://www.google.com/maps?q=Miguel+Cane+2575+Barranqueras&output=embed">
+</iframe>
+
 </div>
 
 <div class="cart">
-🛒 <span id="cartCount">0</span>
-</div>
+
+<div id="total">Total $0</div>
+
+<button onclick="finalizar()">Finalizar pedido</button>
 
 </div>
-
-<div class="hero">
-
-<img src="Milanesapollo.jpeg">
-
-<h2>Las milanesas más ricas de Barranqueras</h2>
-
-<p>👀 Visitas: <span id="views"></span></p>
-
-</div>
-
-<div class="search">
-
-<input id="search" placeholder="Buscar productos..." onkeyup="searchProduct()">
-
-</div>
-
-<div class="products" id="products">
-
-<div class="product" data-name="1kg">
-
-<img src="Milanesapollo.jpeg">
-
-<div class="product-info">
-
-<h3>Milanesa x 1kg</h3>
-
-<p class="price">$8.000</p>
-
-<button onclick="addCart('1kg',8000)">Agregar</button>
-
-</div>
-
-</div>
-
-<div class="product" data-name="3kg">
-
-<img src="Milanesapollo.jpeg">
-
-<div class="product-info">
-
-<h3>Milanesa x 3kg</h3>
-
-<p class="price">$18.000</p>
-
-<button onclick="addCart('3kg',18000)">Agregar</button>
-
-</div>
-
-</div>
-
-<div class="product" data-name="10kg">
-
-<img src="Milanesapollo.jpeg">
-
-<div class="product-info">
-
-<h3>Milanesa x 10kg</h3>
-
-<p class="price">$55.000</p>
-
-<button onclick="addCart('10kg',55000)">Agregar</button>
-
-</div>
-
-</div>
-
-<div class="product" data-name="25kg">
-
-<img src="Milanesapollo.jpeg">
-
-<div class="product-info">
-
-<h3>Milanesa x 25kg</h3>
-
-<p class="price">$120.000</p>
-
-<button onclick="addCart('25kg',120000)">Agregar</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="cart-panel" id="cartPanel">
-
-<p id="cartItems"></p>
-
-<button onclick="sendOrder()">Pedir por WhatsApp</button>
-
-</div>
-
-<div class="reviews">
-
-<h2>Opiniones</h2>
-
-<div class="review">
-
-<strong>Juan M.</strong>
-
-<div class="stars">★★★★★</div>
-
-<p>Muy tiernas y ricas.</p>
-
-</div>
-
-<div class="review">
-
-<strong>Carla G.</strong>
-
-<div class="stars">★★★★★</div>
-
-<p>Compré 3kg y son increíbles.</p>
-
-</div>
-
-</div>
-
-<footer>
-
-Miguel Cane 2575 · Barranqueras · Chaco
-
-</footer>
-
-<a href="https://wa.me/543624505931" class="whatsapp">💬</a>
 
 <script>
 
-/* VISITAS */
+window.onload=function(){
+setTimeout(()=>{
+document.getElementById("loader").style.display="none";
+},1200);
+}
 
-let views=localStorage.getItem("views")||0;
+function modoOscuro(){
+document.body.classList.toggle("dark");
+}
 
-views++;
+let precios={
+pollo:4500,
+napo:5200
+};
 
-localStorage.setItem("views",views);
+let cantidades={
+pollo:0,
+napo:0
+};
 
-document.getElementById("views").innerText=views;
+function cambiar(producto,valor){
 
-/* BUSCADOR */
+cantidades[producto]+=valor;
 
-function searchProduct(){
+if(cantidades[producto]<0)cantidades[producto]=0;
 
-let input=document.getElementById("search").value.toLowerCase();
+document.getElementById(producto).innerText=cantidades[producto];
 
-let products=document.querySelectorAll(".product");
-
-products.forEach(p=>{
-
-let name=p.dataset.name;
-
-p.style.display=name.includes(input)?"block":"none";
-
-});
+actualizarTotal();
 
 }
 
-/* CARRITO */
+function actualizarTotal(){
 
-let cart=[];
+let total=0;
 
-function addCart(name,price){
+for(let p in cantidades){
+total+=cantidades[p]*precios[p];
+}
 
-cart.push({name,price});
-
-document.getElementById("cartCount").innerText=cart.length;
-
-document.getElementById("cartPanel").style.display="block";
-
-updateCart();
+document.getElementById("total").innerText="Total $"+total;
 
 }
 
-function updateCart(){
+function finalizar(){
 
-let text="";
+let mensaje="Hola quiero pedir:%0A";
 
-cart.forEach(i=>{
+let total=0;
 
-text+=i.name+" - $"+i.price+" | ";
+for(let p in cantidades){
 
-});
+if(cantidades[p]>0){
 
-document.getElementById("cartItems").innerText=text;
+mensaje+=p+" x"+cantidades[p]+"%0A";
+
+total+=cantidades[p]*precios[p];
+
+}
 
 }
 
-function sendOrder(){
+mensaje+="Total $"+total;
 
-let msg="Hola quiero pedir: ";
-
-cart.forEach(i=>{
-
-msg+=i.name+" ";
-
-});
-
-window.open("https://wa.me/543624505931?text="+msg);
+window.open("https://wa.me/543624505931?text="+mensaje);
 
 }
+
+function agregarReview(){
+
+let nombre=document.getElementById("nombre").value;
+
+let comentario=document.getElementById("comentario").value;
+
+let html=`
+
+<div class="review">
+
+<img src="https://randomuser.me/api/portraits/lego/1.jpg">
+
+<div>
+
+<strong>${nombre}</strong>
+
+<div class="stars">★★★★★</div>
+
+<p>${comentario}</p>
+
+</div>
+
+</div>
+
+`;
+
+document.getElementById("reviews").innerHTML+=html;
+
+}
+
+let contador=0;
+
+let intervalo=setInterval(()=>{
+
+contador+=10;
+
+document.getElementById("contador").innerText=contador;
+
+if(contador>=500)clearInterval(intervalo);
+
+},30);
 
 </script>
 

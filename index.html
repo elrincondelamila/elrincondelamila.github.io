@@ -30,8 +30,6 @@ box-shadow:0 4px 10px rgba(0,0,0,0.2);
 
 header h2{margin:0;}
 
-/* CONTADOR CARRITO */
-
 .cart-counter{
 position:absolute;
 right:20px;
@@ -43,8 +41,6 @@ border-radius:20px;
 font-weight:bold;
 }
 
-/* MENU */
-
 .menu-btn{
 position:absolute;
 left:20px;
@@ -52,6 +48,8 @@ top:25px;
 font-size:26px;
 cursor:pointer;
 }
+
+/* MENU */
 
 .menu{
 position:fixed;
@@ -78,26 +76,48 @@ font-weight:bold;
 left:0;
 }
 
-/* HERO */
+/* HERO MEJORADO */
 
 .hero{
-background:url("Milanesapollo.jpeg") center/cover;
-height:320px;
+position:relative;
+background:url("Milanesapollo.jpeg") center/cover no-repeat;
+height:300px;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-color:white;
 text-align:center;
-text-shadow:0 3px 10px black;
+color:white;
+padding:20px;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+}
+
+.hero h1,
+.hero p{
+position:relative;
+z-index:1;
+margin:5px 0;
 }
 
 .hero h1{
-font-size:35px;
-margin:0;
+font-size:32px;
+font-weight:bold;
 }
 
-/* CONTAINER */
+.hero p{
+font-size:18px;
+}
+
+/* CONTENEDOR */
 
 .container{
 max-width:1100px;
@@ -123,7 +143,7 @@ transition:0.3s;
 }
 
 .card:hover{
-transform:translateY(-5px);
+transform:translateY(-6px);
 }
 
 .card img{
@@ -140,10 +160,16 @@ color:white;
 padding:10px 15px;
 border-radius:20px;
 cursor:pointer;
+transition:0.3s;
 }
 
 button:hover{
 opacity:0.8;
+}
+
+button:disabled{
+background:gray;
+cursor:not-allowed;
 }
 
 /* CARRITO */
@@ -182,19 +208,6 @@ border-radius:10px;
 border:1px solid #ccc;
 }
 
-/* GALERIA */
-
-.galeria{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-}
-
-.galeria img{
-width:100%;
-border-radius:15px;
-}
-
 /* WHATSAPP */
 
 .whatsapp{
@@ -226,7 +239,6 @@ margin-top:50px;
 <div class="menu" id="menu">
 <a href="#productos">Productos</a>
 <a href="#opiniones">Opiniones</a>
-<a href="#galeria">Galería</a>
 <a href="#ubicacion">Ubicación</a>
 </div>
 
@@ -235,6 +247,9 @@ margin-top:50px;
 <div class="cart-counter" id="contador">0</div>
 <h2>El Rincón de la Mila</h2>
 </header>
+
+<!-- ESPACIO PARA QUE NO QUEDE PEGADO -->
+<div style="height:10px;"></div>
 
 <section class="hero">
 <h1>Las milanesas más ricas</h1>
@@ -283,22 +298,17 @@ margin-top:50px;
 <div class="form-reseña">
 <input id="nombre" placeholder="Tu nombre">
 <textarea id="mensaje" placeholder="Tu opinión"></textarea>
-<button onclick="agregarOpinion()">Enviar Opinión</button>
+<button onclick="agregarOpinion()">Enviar</button>
 </div>
 
 <div class="reseñas" id="reseñas"></div>
 
-<h2 id="galeria">Galería</h2>
-<div class="galeria">
-<img src="Milanesapollo.jpeg">
-<img src="Milanesapollo.jpeg">
-<img src="Milanesapollo.jpeg">
-</div>
-
 <h2 id="ubicacion">Ubicación</h2>
+
 <iframe 
 src="https://maps.google.com/maps?q=Miguel%20Cane%202575%20Barranqueras&t=&z=15&ie=UTF8&output=embed"
-width="100%" height="300" style="border:none;border-radius:15px;">
+width="100%" height="300"
+style="border:none;border-radius:15px;">
 </iframe>
 
 </div>
@@ -313,7 +323,15 @@ width="100%" height="300" style="border:none;border-radius:15px;">
 <script>
 
 let carrito=[];
-let opiniones=JSON.parse(localStorage.getItem("opiniones")) || [];
+let opiniones=JSON.parse(localStorage.getItem("opiniones"))||[];
+
+/* MENU */
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("active");
+}
+
+/* CARRITO */
 
 function agregar(nombre,precio){
 carrito.push({nombre,precio});
@@ -353,10 +371,6 @@ carrito.forEach(item=>{
 msg+="• "+item.nombre+"%0A";
 });
 window.open("https://wa.me/543624505931?text="+msg);
-}
-
-function toggleMenu(){
-document.getElementById("menu").classList.toggle("active");
 }
 
 /* RESEÑAS */

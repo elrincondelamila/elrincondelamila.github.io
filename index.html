@@ -13,7 +13,6 @@ font-family:Arial;
 background:#f4f4f4;
 color:#222;
 transition:0.3s;
-overflow-x:hidden;
 }
 
 .dark{
@@ -33,68 +32,7 @@ position:relative;
 background:#1a1a1a;
 }
 
-.menuBtn{
-position:absolute;
-left:20px;
-top:20px;
-font-size:26px;
-cursor:pointer;
-}
-
-.menu{
-position:fixed;
-left:-260px;
-top:0;
-width:260px;
-height:100%;
-background:white;
-box-shadow:3px 0 10px rgba(0,0,0,0.2);
-padding:20px;
-transition:0.3s;
-z-index:1001;
-}
-
-.dark .menu{
-background:#1f1f1f;
-}
-
-.menu.open{
-left:0;
-}
-
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-display:none;
-z-index:1000;
-}
-
-.overlay.show{
-display:block;
-}
-
-.menu button{
-width:100%;
-margin:10px 0;
-padding:10px;
-font-size:16px;
-cursor:pointer;
-}
-
-.admin{
-display:none;
-margin-top:20px;
-}
-
-.admin input{
-width:90px;
-margin:5px;
-}
-
+/* BARRA PROMOCION */
 .promo{
 background:#ff9800;
 color:white;
@@ -102,6 +40,8 @@ text-align:center;
 padding:8px;
 font-weight:bold;
 }
+
+/* carrito arriba */
 
 #carritoTop{
 position:absolute;
@@ -114,8 +54,25 @@ border-radius:20px;
 font-weight:bold;
 }
 
+/* notificacion */
+
+#notificacion{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#4CAF50;
+color:white;
+padding:12px 25px;
+border-radius:6px;
+display:none;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* hero */
+
 .hero{
-background:url("milanesapollo.jpeg") center/cover;
+background:url("Milanesapollo.jpeg") center/cover;
 height:350px;
 display:flex;
 flex-direction:column;
@@ -135,17 +92,23 @@ margin:0;
 font-size:20px;
 }
 
+/* beneficios */
+
 .beneficios{
 text-align:center;
 margin-top:15px;
 font-size:18px;
 }
 
+/* contador clientes */
+
 .contador{
 text-align:center;
 font-size:28px;
 margin:40px 0;
 }
+
+/* productos */
 
 .container{
 max-width:1100px;
@@ -182,6 +145,8 @@ width:100%;
 border-radius:10px;
 }
 
+/* badge */
+
 .badge{
 position:absolute;
 top:10px;
@@ -192,6 +157,8 @@ padding:4px 8px;
 border-radius:5px;
 font-size:12px;
 }
+
+/* carrito */
 
 .carrito{
 margin-top:40px;
@@ -204,44 +171,62 @@ border-radius:10px;
 background:#1f1f1f;
 }
 
+/* reseñas */
+
+.reseñas{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.reseña{
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+.estrellas{
+color:gold;
+}
+
+/* mapa */
+
+.mapa iframe{
+width:100%;
+height:350px;
+border:0;
+border-radius:10px;
+}
+
+/* modo oscuro */
+
+.dark-toggle{
+position:fixed;
+top:15px;
+left:15px;
+background:black;
+color:white;
+border:none;
+padding:10px;
+border-radius:6px;
+cursor:pointer;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
-<div class="menu" id="menu">
-
-<h3>Menú</h3>
-
-<button onclick="modoOscuro()">🌙 Modo oscuro</button>
-
-<button onclick="mostrarAdmin()">⚙️ Panel admin</button>
-
-<div class="admin" id="admin">
-
-<h4>Editar precios</h4>
-
-3kg <input id="p1"><br>
-5kg <input id="p2"><br>
-10kg <input id="p3"><br>
-15kg <input id="p4"><br>
-25kg <input id="p5"><br><br>
-
-<button onclick="guardarPrecios()">Guardar precios</button>
-
-</div>
-
-</div>
-
 <div class="promo">
 🔥 OFERTA: 10% OFF en compras de 10kg o más
 </div>
 
-<header>
+<div id="notificacion">Producto agregado al carrito</div>
 
-<div class="menuBtn" onclick="toggleMenu()">☰</div>
+<button class="dark-toggle" onclick="modoOscuro()">🌙</button>
+
+<header>
 
 <h2>El Rincón de la Mila</h2>
 
@@ -267,7 +252,7 @@ background:#1f1f1f;
 <div class="container">
 
 <div class="contador">
-+ 500 clientes satisfechos
++ <span id="clientes">500</span> clientes satisfechos
 </div>
 
 <p style="text-align:center">
@@ -279,119 +264,207 @@ background:#1f1f1f;
 <div class="productos">
 
 <div class="card">
-<img src="milanesapollo.jpeg">
-<h3>3kg</h3>
-<p id="precio1"></p>
-<button onclick="agregar(precios.p1)">Agregar</button>
+<img src="Milanesapollo.jpeg">
+<h3>Milanesa de pollo 3kg</h3>
+<p>$15000</p>
+<input type="number" id="c1" value="1">
+<br><br>
+<button onclick="agregar('Milanesa de pollo 3kg',15000,'c1')">Agregar</button>
 </div>
 
 <div class="card">
-<img src="milanesapollo.jpeg">
-<h3>5kg</h3>
-<p id="precio2"></p>
-<button onclick="agregar(precios.p2)">Agregar</button>
+<img src="Milanesapollo.jpeg">
+<h3>Milanesa de pollo 5kg</h3>
+<p>$24000</p>
+<input type="number" id="c2" value="1">
+<br><br>
+<button onclick="agregar('Milanesa de pollo 5kg',24000,'c2')">Agregar</button>
 </div>
 
 <div class="card">
 <span class="badge">Más vendido</span>
-<img src="milanesapollo.jpeg">
-<h3>10kg</h3>
-<p id="precio3"></p>
-<button onclick="agregar(precios.p3)">Agregar</button>
+<img src="Milanesapollo.jpeg">
+<h3>Milanesa de pollo 10kg</h3>
+<p>$45000</p>
+<input type="number" id="c3" value="1">
+<br><br>
+<button onclick="agregar('Milanesa de pollo 10kg',45000,'c3')">Agregar</button>
 </div>
 
 <div class="card">
-<img src="milanesapollo.jpeg">
-<h3>15kg</h3>
-<p id="precio4"></p>
-<button onclick="agregar(precios.p4)">Agregar</button>
+<img src="Milanesapollo.jpeg">
+<h3>Milanesa de pollo 15kg</h3>
+<p>$65000</p>
+<input type="number" id="c4" value="1">
+<br><br>
+<button onclick="agregar('Milanesa de pollo 15kg',65000,'c4')">Agregar</button>
 </div>
 
 <div class="card">
-<img src="milanesapollo.jpeg">
-<h3>25kg</h3>
-<p id="precio5"></p>
-<button onclick="agregar(precios.p5)">Agregar</button>
+<img src="Milanesapollo.jpeg">
+<h3>Milanesa de pollo 25kg</h3>
+<p>$100000</p>
+<input type="number" id="c5" value="1">
+<br><br>
+<button onclick="agregar('Milanesa de pollo 25kg',100000,'c5')">Agregar</button>
 </div>
 
+</div>
+
+<div class="carrito">
+
+<h2>Carrito</h2>
+
+<ul id="listaCarrito"></ul>
+
+<p>Total: <span id="total">$0</span></p>
+
+<button onclick="finalizarCompra()">Finalizar compra</button>
+
+</div>
+
+<h2>Opiniones</h2>
+
+<div class="reseñas">
+
+<div class="reseña">
+<strong>Carla Gómez</strong>
+<div class="estrellas">★★★★★</div>
+<p>Las milanesas son espectaculares, súper tiernas.</p>
+</div>
+
+<div class="reseña">
+<strong>Lucas Fernández</strong>
+<div class="estrellas">★★★★★</div>
+<p>Compré 10kg para la familia y quedaron todos encantados.</p>
+</div>
+
+<div class="reseña">
+<strong>María López</strong>
+<div class="estrellas">★★★★★</div>
+<p>Excelente calidad y atención.</p>
+</div>
+
+</div>
+
+<h2>Clientes también compraron</h2>
+
+<p style="text-align:center">
+Pack familiar 10kg + 3kg 🔥
+</p>
+
+<h2>Ubicación</h2>
+
+<div class="mapa">
+<iframe src="https://maps.google.com/maps?q=Miguel%20Cane%202575%20Barranqueras&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
 </div>
 
 </div>
 
 <script>
 
-let precios = JSON.parse(localStorage.getItem("precios")) || {
-p1:18000,
-p2:30000,
-p3:55000,
-p4:90000,
-p5:130000
-};
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-function mostrarPrecios(){
+function agregar(nombre,precio,input){
 
-precio1.textContent="$"+precios.p1;
-precio2.textContent="$"+precios.p2;
-precio3.textContent="$"+precios.p3;
-precio4.textContent="$"+precios.p4;
-precio5.textContent="$"+precios.p5;
+let cantidad=document.getElementById(input).value;
+
+for(let i=0;i<cantidad;i++){
+carrito.push({nombre,precio});
+}
+
+navigator.vibrate(100);
+
+mostrarNotificacion();
+
+guardar();
+
+actualizar();
 
 }
 
-function toggleMenu(){
+function eliminar(index){
 
-menu.classList.toggle("open");
-overlay.classList.toggle("show");
+carrito.splice(index,1);
 
-}
+guardar();
 
-function mostrarAdmin(){
-
-let a=document.getElementById("admin");
-
-a.style.display = a.style.display==="block"?"none":"block";
-
-p1.value=precios.p1;
-p2.value=precios.p2;
-p3.value=precios.p3;
-p4.value=precios.p4;
-p5.value=precios.p5;
+actualizar();
 
 }
 
-function guardarPrecios(){
+function guardar(){
 
-precios={
-p1:parseInt(p1.value),
-p2:parseInt(p2.value),
-p3:parseInt(p3.value),
-p4:parseInt(p4.value),
-p5:parseInt(p5.value)
-};
-
-localStorage.setItem("precios",JSON.stringify(precios));
-
-mostrarPrecios();
-
-alert("Precios actualizados");
+localStorage.setItem("carrito",JSON.stringify(carrito));
 
 }
 
-function agregar(precio){
+function actualizar(){
 
-let carrito=parseInt(localStorage.getItem("carrito")||0);
+let lista=document.getElementById("listaCarrito");
 
-carrito++;
+let total=document.getElementById("total");
 
-localStorage.setItem("carrito",carrito);
+lista.innerHTML="";
 
-cantidadCarrito.textContent=carrito;
+let suma=0;
+
+carrito.forEach((item,index)=>{
+
+let li=document.createElement("li");
+
+li.innerHTML=item.nombre+" - $"+item.precio+
+" <button onclick='eliminar("+index+")'>❌</button>";
+
+lista.appendChild(li);
+
+suma+=item.precio;
+
+});
+
+total.textContent="$"+suma;
+
+document.getElementById("cantidadCarrito").textContent=carrito.length;
 
 }
 
-mostrarPrecios();
+function mostrarNotificacion(){
 
-cantidadCarrito.textContent=localStorage.getItem("carrito")||0;
+let n=document.getElementById("notificacion");
+
+n.style.display="block";
+
+setTimeout(()=>{
+
+n.style.display="none";
+
+},2000);
+
+}
+
+function finalizarCompra(){
+
+let mensaje="Hola! Quiero pedir:%0A";
+
+carrito.forEach(item=>{
+mensaje+="• "+item.nombre+"%0A";
+});
+
+let total=carrito.reduce((a,b)=>a+b.precio,0);
+
+mensaje+="%0ATotal: $"+total;
+
+window.open("https://wa.me/543624505931?text="+mensaje);
+
+}
+
+function modoOscuro(){
+
+document.body.classList.toggle("dark");
+
+}
+
+actualizar();
 
 </script>
 

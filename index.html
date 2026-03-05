@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>El Rincón de la Mila</title>
 
 <style>
@@ -10,7 +11,7 @@
 body{
 margin:0;
 font-family:Arial;
-background:#fafafa;
+background:#f5f5f5;
 }
 
 /* HEADER */
@@ -18,35 +19,50 @@ background:#fafafa;
 header{
 background:#d62828;
 color:white;
-text-align:center;
-padding:20px;
+padding:15px;
+display:flex;
+align-items:center;
+justify-content:space-between;
 }
 
-header img{
-width:170px;
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.logo img{
+width:45px;
+border-radius:10px;
+}
+
+.cart-icon{
+font-size:22px;
+cursor:pointer;
 }
 
 /* HERO */
 
 .hero{
-text-align:center;
 padding:20px;
+text-align:center;
+background:white;
 }
 
 .hero img{
 width:100%;
-max-width:500px;
+max-width:450px;
 border-radius:20px;
 }
 
-/* CONTADOR */
+/* STATS */
 
 .stats{
 display:flex;
-justify-content:center;
-gap:40px;
-padding:20px;
+justify-content:space-around;
+padding:15px;
 background:white;
+margin-top:10px;
 }
 
 .stat{
@@ -54,22 +70,31 @@ text-align:center;
 }
 
 .stat h3{
-color:#d62828;
-font-size:28px;
 margin:0;
+color:#d62828;
+}
+
+/* BUSCADOR */
+
+.search{
+padding:15px;
+background:white;
+}
+
+.search input{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+font-size:16px;
 }
 
 /* PRODUCTOS */
 
-.section{
-padding:25px;
-max-width:1100px;
-margin:auto;
-}
-
 .products{
+padding:20px;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
 gap:20px;
 }
 
@@ -78,11 +103,16 @@ background:white;
 border-radius:15px;
 box-shadow:0 5px 20px rgba(0,0,0,0.1);
 overflow:hidden;
+transition:0.3s;
+}
+
+.product:hover{
+transform:scale(1.03);
 }
 
 .product img{
 width:100%;
-height:200px;
+height:180px;
 object-fit:cover;
 }
 
@@ -91,63 +121,65 @@ padding:15px;
 }
 
 .price{
-font-size:22px;
-font-weight:bold;
 color:#d62828;
+font-size:20px;
+font-weight:bold;
 }
 
 .badge{
 background:#ff9800;
 color:white;
-padding:5px 10px;
-border-radius:10px;
+padding:4px 8px;
+border-radius:8px;
 font-size:12px;
-display:inline-block;
-margin-bottom:10px;
 }
 
-button{
+.add-btn{
+margin-top:10px;
 background:#25D366;
+color:white;
 border:none;
 padding:10px;
 width:100%;
-color:white;
 border-radius:10px;
 cursor:pointer;
-}
-
-button:hover{
-background:#1ebe5d;
 }
 
 /* CARRITO */
 
 .cart{
 position:fixed;
-top:20px;
 right:20px;
+top:70px;
 background:white;
+width:250px;
 padding:15px;
-border-radius:10px;
-box-shadow:0 5px 20px rgba(0,0,0,0.2);
-width:220px;
+border-radius:15px;
+box-shadow:0 5px 25px rgba(0,0,0,0.2);
 }
 
 .cart h4{
 margin-top:0;
 }
 
-.cart button{
+.checkout{
+background:#d62828;
+color:white;
+border:none;
+padding:10px;
+width:100%;
+border-radius:10px;
 margin-top:10px;
+cursor:pointer;
 }
 
 /* RESEÑAS */
 
 .reviews{
-background:white;
 padding:20px;
+background:white;
+margin:20px;
 border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,0.08);
 }
 
 .review{
@@ -157,17 +189,6 @@ padding:10px 0;
 
 .stars{
 color:#ff9800;
-}
-
-/* FORM */
-
-input,textarea{
-width:100%;
-padding:8px;
-margin-top:5px;
-margin-bottom:10px;
-border-radius:6px;
-border:1px solid #ccc;
 }
 
 /* WHATSAPP */
@@ -186,6 +207,7 @@ justify-content:center;
 font-size:30px;
 color:white;
 text-decoration:none;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
 }
 
 /* FOOTER */
@@ -194,6 +216,7 @@ footer{
 text-align:center;
 padding:30px;
 color:#666;
+font-size:14px;
 }
 
 </style>
@@ -203,11 +226,14 @@ color:#666;
 
 <header>
 
+<div class="logo">
 <img src="BackgroundEraser_20260304_034450533.png">
+<b>El Rincón de la Mila</b>
+</div>
 
-<h2>El Rincón de la Mila</h2>
-
-<p>Milanesas artesanales premium</p>
+<div class="cart-icon">
+🛒 <span id="cart-count">0</span>
+</div>
 
 </header>
 
@@ -221,8 +247,6 @@ color:#666;
 </div>
 
 
-<!-- CONTADOR -->
-
 <div class="stats">
 
 <div class="stat">
@@ -231,31 +255,24 @@ color:#666;
 </div>
 
 <div class="stat">
-<h3 id="visits">0</h3>
-<p>Visitas a la web</p>
+<h3>1000kg+</h3>
+<p>Vendidos</p>
+</div>
+
+<div class="stat">
+<h3>⭐4.9</h3>
+<p>Calificación</p>
 </div>
 
 </div>
 
 
-<!-- CARRITO -->
+<div class="search">
 
-<div class="cart">
-
-<h4>🛒 Carrito</h4>
-
-<div id="cart-items"></div>
-
-<button onclick="sendOrder()">Finalizar pedido</button>
+<input type="text" placeholder="Buscar milanesas...">
 
 </div>
 
-
-<!-- PRODUCTOS -->
-
-<div class="section">
-
-<h2>Productos</h2>
 
 <div class="products">
 
@@ -266,13 +283,11 @@ color:#666;
 
 <div class="product-info">
 
-<h3>Milanesa x 1kg</h3>
+<h3>Milanesa 1kg</h3>
 
 <p class="price">$8.000</p>
 
-<input type="number" id="q1" value="1" min="1">
-
-<button onclick="addCart('1kg',8000,'q1')">Agregar</button>
+<button class="add-btn" onclick="addCart('1kg')">Agregar</button>
 
 </div>
 
@@ -285,15 +300,13 @@ color:#666;
 
 <div class="product-info">
 
-<div class="badge">🔥 Más vendido</div>
+<span class="badge">🔥 Más vendido</span>
 
-<h3>Milanesa x 3kg</h3>
+<h3>Milanesa 3kg</h3>
 
 <p class="price">$18.000</p>
 
-<input type="number" id="q2" value="1" min="1">
-
-<button onclick="addCart('3kg',18000,'q2')">Agregar</button>
+<button class="add-btn" onclick="addCart('3kg')">Agregar</button>
 
 </div>
 
@@ -306,13 +319,11 @@ color:#666;
 
 <div class="product-info">
 
-<h3>Milanesa x 10kg</h3>
+<h3>Milanesa 10kg</h3>
 
 <p class="price">$55.000</p>
 
-<input type="number" id="q3" value="1" min="1">
-
-<button onclick="addCart('10kg',55000,'q3')">Agregar</button>
+<button class="add-btn" onclick="addCart('10kg')">Agregar</button>
 
 </div>
 
@@ -325,13 +336,11 @@ color:#666;
 
 <div class="product-info">
 
-<h3>Milanesa x 25kg</h3>
+<h3>Milanesa 25kg</h3>
 
 <p class="price">$120.000</p>
 
-<input type="number" id="q4" value="1" min="1">
-
-<button onclick="addCart('25kg',120000,'q4')">Agregar</button>
+<button class="add-btn" onclick="addCart('25kg')">Agregar</button>
 
 </div>
 
@@ -340,32 +349,41 @@ color:#666;
 
 </div>
 
+
+<div class="cart">
+
+<h4>Tu pedido</h4>
+
+<div id="cart-items"></div>
+
+<button class="checkout" onclick="sendOrder()">Enviar pedido</button>
+
 </div>
 
 
-<!-- RESEÑAS -->
+<div class="reviews">
 
-<div class="section">
+<h3>Opiniones de clientes</h3>
 
-<h2>Opiniones de clientes</h2>
+<div class="review">
 
-<div class="reviews" id="reviews"></div>
+<strong>Juan M.</strong>
 
-<h3>Dejar opinión</h3>
+<div class="stars">★★★★★</div>
 
-<input id="name" placeholder="Tu nombre">
+<p>Las mejores milanesas que probé.</p>
 
-<select id="rating">
+</div>
 
-<option value="★★★★★">★★★★★</option>
-<option value="★★★★☆">★★★★☆</option>
-<option value="★★★☆☆">★★★☆☆</option>
+<div class="review">
 
-</select>
+<strong>Carla G.</strong>
 
-<textarea id="comment" placeholder="Tu comentario"></textarea>
+<div class="stars">★★★★★</div>
 
-<button onclick="addReview()">Publicar</button>
+<p>Compré 3kg y rinden muchísimo.</p>
+
+</div>
 
 </div>
 
@@ -382,26 +400,13 @@ Miguel Cane 2575 · Barranqueras · Chaco
 
 <script>
 
-/* CONTADOR VISITAS */
-
-let visits=localStorage.getItem("visits");
-
-visits=visits?parseInt(visits)+1:1;
-
-localStorage.setItem("visits",visits);
-
-document.getElementById("visits").innerText=visits;
-
-
-/* CARRITO */
-
 let cart=[];
 
-function addCart(name,price,qid){
+function addCart(product){
 
-let q=document.getElementById(qid).value;
+cart.push(product);
 
-cart.push({name,price,quantity:q});
+document.getElementById("cart-count").innerText=cart.length;
 
 renderCart();
 
@@ -413,7 +418,7 @@ let html="";
 
 cart.forEach(p=>{
 
-html+=p.name+" x"+p.quantity+"<br>";
+html+=p+"<br>";
 
 });
 
@@ -421,69 +426,19 @@ document.getElementById("cart-items").innerHTML=html;
 
 }
 
-
 function sendOrder(){
 
 let msg="Hola quiero pedir:%0A";
 
 cart.forEach(p=>{
 
-msg+=p.name+" x"+p.quantity+"%0A";
+msg+=p+"%0A";
 
 });
 
 window.open("https://wa.me/543624505931?text="+msg);
 
 }
-
-
-/* RESEÑAS */
-
-let reviews=JSON.parse(localStorage.getItem("reviews"))||[];
-
-function renderReviews(){
-
-let html="";
-
-reviews.forEach(r=>{
-
-html+=`
-
-<div class="review">
-
-<strong>${r.name}</strong>
-
-<div class="stars">${r.rating}</div>
-
-<p>${r.comment}</p>
-
-</div>
-
-`;
-
-});
-
-document.getElementById("reviews").innerHTML=html;
-
-}
-
-function addReview(){
-
-let name=document.getElementById("name").value;
-
-let rating=document.getElementById("rating").value;
-
-let comment=document.getElementById("comment").value;
-
-reviews.push({name,rating,comment});
-
-localStorage.setItem("reviews",JSON.stringify(reviews));
-
-renderReviews();
-
-}
-
-renderReviews();
 
 </script>
 

@@ -20,6 +20,18 @@ background:#111;
 color:white;
 }
 
+/* BARRA PROMO */
+
+.promo{
+background:#ff9800;
+color:white;
+text-align:center;
+padding:8px;
+font-weight:bold;
+}
+
+/* HEADER */
+
 header{
 background:white;
 padding:20px;
@@ -32,13 +44,39 @@ position:relative;
 background:#1a1a1a;
 }
 
-/* BARRA PROMOCION */
-.promo{
-background:#ff9800;
-color:white;
-text-align:center;
-padding:8px;
+/* MENU */
+
+.menu-btn{
+position:absolute;
+left:20px;
+top:20px;
+font-size:25px;
+cursor:pointer;
+}
+
+.menu{
+position:fixed;
+left:-250px;
+top:0;
+width:250px;
+height:100%;
+background:white;
+box-shadow:2px 0 10px rgba(0,0,0,0.2);
+padding:20px;
+transition:0.3s;
+z-index:1000;
+}
+
+.menu a{
+display:block;
+margin:15px 0;
+text-decoration:none;
+color:#222;
 font-weight:bold;
+}
+
+.menu.active{
+left:0;
 }
 
 /* carrito arriba */
@@ -52,21 +90,6 @@ color:white;
 padding:6px 12px;
 border-radius:20px;
 font-weight:bold;
-}
-
-/* notificacion */
-
-#notificacion{
-position:fixed;
-bottom:20px;
-left:50%;
-transform:translateX(-50%);
-background:#4CAF50;
-color:white;
-padding:12px 25px;
-border-radius:6px;
-display:none;
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
 /* hero */
@@ -100,7 +123,7 @@ margin-top:15px;
 font-size:18px;
 }
 
-/* contador clientes */
+/* contador */
 
 .contador{
 text-align:center;
@@ -108,13 +131,15 @@ font-size:28px;
 margin:40px 0;
 }
 
-/* productos */
+/* container */
 
 .container{
 max-width:1100px;
 margin:auto;
 padding:20px;
 }
+
+/* productos */
 
 .productos{
 display:grid;
@@ -144,8 +169,6 @@ transform:scale(1.05);
 width:100%;
 border-radius:10px;
 }
-
-/* badge */
 
 .badge{
 position:absolute;
@@ -190,6 +213,19 @@ box-shadow:0 3px 10px rgba(0,0,0,0.1);
 color:gold;
 }
 
+/* galeria */
+
+.galeria{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+}
+
+.galeria img{
+width:100%;
+border-radius:10px;
+}
+
 /* mapa */
 
 .mapa iframe{
@@ -199,18 +235,62 @@ border:0;
 border-radius:10px;
 }
 
+/* formulario */
+
+input,textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+padding:10px 20px;
+border:none;
+background:#ff9800;
+color:white;
+border-radius:5px;
+cursor:pointer;
+margin-top:10px;
+}
+
+/* whatsapp */
+
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+padding:15px;
+border-radius:50%;
+font-size:22px;
+text-decoration:none;
+}
+
 /* modo oscuro */
 
 .dark-toggle{
 position:fixed;
 top:15px;
-left:15px;
+left:60px;
 background:black;
 color:white;
 border:none;
 padding:10px;
 border-radius:6px;
 cursor:pointer;
+}
+
+/* footer */
+
+footer{
+background:#222;
+color:white;
+text-align:center;
+padding:30px;
+margin-top:50px;
 }
 
 </style>
@@ -222,11 +302,20 @@ cursor:pointer;
 🔥 OFERTA: 10% OFF en compras de 10kg o más
 </div>
 
-<div id="notificacion">Producto agregado al carrito</div>
+<div class="menu" id="menu">
+
+<a href="#productos">Productos</a>
+<a href="#opiniones">Opiniones</a>
+<a href="#galeria">Galería</a>
+<a href="#ubicacion">Ubicación</a>
+
+</div>
 
 <button class="dark-toggle" onclick="modoOscuro()">🌙</button>
 
 <header>
+
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
 
 <h2>El Rincón de la Mila</h2>
 
@@ -255,58 +344,30 @@ cursor:pointer;
 + <span id="clientes">500</span> clientes satisfechos
 </div>
 
-<p style="text-align:center">
-👥 27 personas compraron hoy
-</p>
-
-<h2>Productos</h2>
+<h2 id="productos">Productos</h2>
 
 <div class="productos">
 
 <div class="card">
 <img src="Milanesapollo.jpeg">
-<h3>Milanesa de pollo 3kg</h3>
+<h3>Milanesa 3kg</h3>
 <p>$15000</p>
-<input type="number" id="c1" value="1">
-<br><br>
-<button onclick="agregar('Milanesa de pollo 3kg',15000,'c1')">Agregar</button>
+<button onclick="agregar('Milanesa 3kg',15000)">Agregar</button>
 </div>
 
 <div class="card">
 <img src="Milanesapollo.jpeg">
-<h3>Milanesa de pollo 5kg</h3>
+<h3>Milanesa 5kg</h3>
 <p>$24000</p>
-<input type="number" id="c2" value="1">
-<br><br>
-<button onclick="agregar('Milanesa de pollo 5kg',24000,'c2')">Agregar</button>
+<button onclick="agregar('Milanesa 5kg',24000)">Agregar</button>
 </div>
 
 <div class="card">
 <span class="badge">Más vendido</span>
 <img src="Milanesapollo.jpeg">
-<h3>Milanesa de pollo 10kg</h3>
+<h3>Milanesa 10kg</h3>
 <p>$45000</p>
-<input type="number" id="c3" value="1">
-<br><br>
-<button onclick="agregar('Milanesa de pollo 10kg',45000,'c3')">Agregar</button>
-</div>
-
-<div class="card">
-<img src="Milanesapollo.jpeg">
-<h3>Milanesa de pollo 15kg</h3>
-<p>$65000</p>
-<input type="number" id="c4" value="1">
-<br><br>
-<button onclick="agregar('Milanesa de pollo 15kg',65000,'c4')">Agregar</button>
-</div>
-
-<div class="card">
-<img src="Milanesapollo.jpeg">
-<h3>Milanesa de pollo 25kg</h3>
-<p>$100000</p>
-<input type="number" id="c5" value="1">
-<br><br>
-<button onclick="agregar('Milanesa de pollo 25kg',100000,'c5')">Agregar</button>
+<button onclick="agregar('Milanesa 10kg',45000)">Agregar</button>
 </div>
 
 </div>
@@ -323,37 +384,35 @@ cursor:pointer;
 
 </div>
 
-<h2>Opiniones</h2>
+<h2 id="opiniones">Opiniones</h2>
 
-<div class="reseñas">
+<div class="reseñas" id="listaReseñas">
 
 <div class="reseña">
 <strong>Carla Gómez</strong>
 <div class="estrellas">★★★★★</div>
-<p>Las milanesas son espectaculares, súper tiernas.</p>
-</div>
-
-<div class="reseña">
-<strong>Lucas Fernández</strong>
-<div class="estrellas">★★★★★</div>
-<p>Compré 10kg para la familia y quedaron todos encantados.</p>
-</div>
-
-<div class="reseña">
-<strong>María López</strong>
-<div class="estrellas">★★★★★</div>
-<p>Excelente calidad y atención.</p>
+<p>Las milanesas son espectaculares.</p>
 </div>
 
 </div>
 
-<h2>Clientes también compraron</h2>
+<h3>Dejar opinión</h3>
 
-<p style="text-align:center">
-Pack familiar 10kg + 3kg 🔥
-</p>
+<input type="text" id="nombre" placeholder="Tu nombre">
+<textarea id="comentario" placeholder="Tu opinión"></textarea>
+<button onclick="agregarReseña()">Enviar</button>
 
-<h2>Ubicación</h2>
+<h2 id="galeria">Galería</h2>
+
+<div class="galeria">
+
+<img src="Milanesapollo.jpeg">
+<img src="Milanesapollo.jpeg">
+<img src="Milanesapollo.jpeg">
+
+</div>
+
+<h2 id="ubicacion">Ubicación</h2>
 
 <div class="mapa">
 <iframe src="https://maps.google.com/maps?q=Miguel%20Cane%202575%20Barranqueras&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
@@ -361,41 +420,32 @@ Pack familiar 10kg + 3kg 🔥
 
 </div>
 
+<a class="whatsapp" href="https://wa.me/543624505931">💬</a>
+
+<footer>
+
+<h3>El Rincón de la Mila</h3>
+
+<p>
+📍 Miguel Cane 2575 – Barranqueras<br>
+📞 3624 505931
+</p>
+
+<p>
+© 2026 El Rincón de la Mila
+</p>
+
+</footer>
+
 <script>
 
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let carrito=[];
 
-function agregar(nombre,precio,input){
+function agregar(nombre,precio){
 
-let cantidad=document.getElementById(input).value;
-
-for(let i=0;i<cantidad;i++){
 carrito.push({nombre,precio});
-}
-
-navigator.vibrate(100);
-
-mostrarNotificacion();
-
-guardar();
 
 actualizar();
-
-}
-
-function eliminar(index){
-
-carrito.splice(index,1);
-
-guardar();
-
-actualizar();
-
-}
-
-function guardar(){
-
-localStorage.setItem("carrito",JSON.stringify(carrito));
 
 }
 
@@ -428,17 +478,11 @@ document.getElementById("cantidadCarrito").textContent=carrito.length;
 
 }
 
-function mostrarNotificacion(){
+function eliminar(index){
 
-let n=document.getElementById("notificacion");
+carrito.splice(index,1);
 
-n.style.display="block";
-
-setTimeout(()=>{
-
-n.style.display="none";
-
-},2000);
+actualizar();
 
 }
 
@@ -450,10 +494,6 @@ carrito.forEach(item=>{
 mensaje+="• "+item.nombre+"%0A";
 });
 
-let total=carrito.reduce((a,b)=>a+b.precio,0);
-
-mensaje+="%0ATotal: $"+total;
-
 window.open("https://wa.me/543624505931?text="+mensaje);
 
 }
@@ -464,9 +504,40 @@ document.body.classList.toggle("dark");
 
 }
 
-actualizar();
+function toggleMenu(){
+
+document.getElementById("menu").classList.toggle("active");
+
+}
+
+function agregarReseña(){
+
+let nombre=document.getElementById("nombre").value;
+
+let comentario=document.getElementById("comentario").value;
+
+let cont=document.getElementById("listaReseñas");
+
+let div=document.createElement("div");
+
+div.className="reseña";
+
+div.innerHTML="<strong>"+nombre+"</strong><div class='estrellas'>★★★★★</div><p>"+comentario+"</p>";
+
+cont.appendChild(div);
+
+}
+
+setInterval(()=>{
+
+let c=document.getElementById("clientes");
+
+c.textContent=parseInt(c.textContent)+1;
+
+},8000);
 
 </script>
 
 </body>
-</html>
+  </html>
+  

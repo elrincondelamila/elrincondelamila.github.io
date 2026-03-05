@@ -1,205 +1,238 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El Rincón de la Mila</title>
+<!DOCTYPE html>  
+<html>  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>El Rincón de la Mila</title>  
+  
+<style>  
+body{  
+  margin:0;  
+  font-family:'Segoe UI', sans-serif;  
+  background:#f4f4f4;  
+  color:#222;  
+}  
+  
+header{  
+  background:white;  
+  text-align:center;  
+  padding:30px;  
+}  
+  
+header img{  
+  max-width:250px;  
+}  
+  
+section{  
+  padding:40px 20px;  
+  max-width:1100px;  
+  margin:auto;  
+}  
+  
+.card{  
+  background:white;  
+  padding:30px;  
+  border-radius:20px;  
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);  
+  margin-bottom:40px;  
+}  
+  
+h2{text-align:center;margin-bottom:20px;}  
+  
+.counter{  
+  font-size:32px;  
+  text-align:center;  
+  color:#d62828;  
+  font-weight:bold;  
+}  
+  
+.products{  
+  display:grid;  
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));  
+  gap:30px;  
+}  
+  
+.product{  
+  background:white;  
+  padding:20px;  
+  border-radius:15px;  
+  box-shadow:0 10px 20px rgba(0,0,0,0.05);  
+  text-align:center;  
+}  
+  
+.product img{  
+  width:100%;  
+  border-radius:15px;  
+  height:200px;  
+  object-fit:cover;  
+}  
+  
+button{  
+  background:#d62828;  
+  color:white;  
+  border:none;  
+  padding:10px 20px;  
+  border-radius:8px;  
+  cursor:pointer;  
+}  
+  
+button:hover{background:#9d0208;}  
+  
+/* NOTIFICACION */  
+.toast{  
+  position:fixed;  
+  top:20px;  
+  right:20px;  
+  background:#25D366;  
+  color:white;  
+  padding:15px 20px;  
+  border-radius:10px;  
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);  
+  opacity:0;  
+  transition:0.4s;  
+  z-index:9999;  
+}  
+  
+.toast.show{  
+  opacity:1;  
+}  
+  
+.whatsapp-float{  
+  position:fixed;  
+  bottom:20px;  
+  right:20px;  
+  background:#25D366;  
+  width:60px;  
+  height:60px;  
+  border-radius:50%;  
+  display:flex;  
+  align-items:center;  
+  justify-content:center;  
+  font-size:28px;  
+  text-decoration:none;  
+  color:white;  
+}  
+  
+iframe{  
+  width:100%;  
+  height:350px;  
+  border:0;  
+  border-radius:20px;  
+}  
+</style>  
+</head>  
+  
+<body>  
+  
+<header>  
+<img src="BackgroundEraser_20260304_034450533.png" alt="Logo">  
+<p>Milanesas artesanales premium</p>  
+</header>  
+  
+<section>  
+  
+<div class="card">  
+<h2>+ Clientes Satisfechos</h2>  
+<div class="counter" id="counter">0</div>  
+</div>  
+  
+<div class="card">  
+<h2>Nuestros Productos</h2>  
+  
+<div class="products">  
+  
+<div class="product">  
+<img src="Milanesapollo.jpeg" alt="Milanesa">  
+<h3>Milanesa de Pollo x 3kg</h3>  
+<p>$21.000</p>  
+<button onclick="addToCart('3kg',21000)">Agregar</button>  
+</div>  
+  
+<div class="product">  
+<img src="Milanesapollo.jpeg" alt="Milanesa">  
+<h3>Milanesa de Pollo x 5kg</h3>  
+<p>$35.000</p>  
+<button onclick="addToCart('5kg',35000)">Agregar</button>  
+</div>  
+  
+<div class="product">  
+<img src="Milanesapollo.jpeg" alt="Milanesa">  
+<h3>Milanesa de Pollo x 10kg</h3>  
+<p>$68.000</p>  
+<button onclick="addToCart('10kg',68000)">Agregar</button>  
+</div>  
+  
+<div class="product">  
+<img src="Milanesapollo.jpeg" alt="Milanesa">  
+<h3>Milanesa de Pollo x 25kg</h3>  
+<p>$160.000</p>  
+<button onclick="addToCart('25kg',160000)">Agregar</button>  
+</div>  
+  
+</div>  
+</div>  
+  
+<div class="card">  
+<h2>Carrito</h2>  
+<ul id="cart-list"></ul>  
+<p>Total: $<span id="total">0</span></p>  
+<button onclick="sendWhatsApp()">Finalizar Compra</button>  
+</div>  
+  
+<h2>Ubicación</h2>  
+<iframe src="https://www.google.com/maps?q=Miguel%20Cane%202575,%20Barranqueras,%20Chaco&output=embed"></iframe>  
+  
+</section>  
+  
+<a href="https://wa.me/543624505931" class="whatsapp-float">💬</a>  
 
-<style>
-body{
-  margin:0;
-  font-family:'Segoe UI', sans-serif;
-  background:#f4f4f4;
-  color:#222;
-}
-
-header{
-  background:white;
-  text-align:center;
-  padding:30px;
-}
-
-header img{
-  max-width:250px;
-}
-
-section{
-  padding:40px 20px;
-  max-width:1100px;
-  margin:auto;
-}
-
-.card{
-  background:white;
-  padding:30px;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
-  margin-bottom:40px;
-}
-
-h2{text-align:center;margin-bottom:20px;}
-
-.counter{
-  font-size:32px;
-  text-align:center;
-  color:#d62828;
-  font-weight:bold;
-}
-
-.products{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-  gap:30px;
-}
-
-.product{
-  background:white;
-  padding:20px;
-  border-radius:15px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.05);
-  text-align:center;
-}
-
-.product img{
-  width:100%;
-  border-radius:15px;
-  height:200px;
-  object-fit:cover;
-}
-
-button{
-  background:#d62828;
-  color:white;
-  border:none;
-  padding:10px 20px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-button:hover{background:#9d0208;}
-
-.whatsapp-float{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  text-decoration:none;
-  color:white;
-}
-
-iframe{
-  width:100%;
-  height:350px;
-  border:0;
-  border-radius:20px;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-<img src="BackgroundEraser_20260304_034450533.png" alt="Logo">
-<p>Milanesas artesanales premium</p>
-</header>
-
-<section>
-
-<div class="card">
-<h2>+ Clientes Satisfechos</h2>
-<div class="counter" id="counter">0</div>
-</div>
-
-<div class="card">
-<h2>Nuestros Productos</h2>
-
-<div class="products">
-
-<div class="product">
-<img src="Milanesapollo.jpeg" alt="Milanesa">
-<h3>Milanesa de Pollo x 3kg</h3>
-<p>$21.000</p>
-<button onclick="addToCart('3kg',21000)">Agregar</button>
-</div>
-
-<div class="product">
-<img src="Milanesapollo.jpeg" alt="Milanesa">
-<h3>Milanesa de Pollo x 5kg</h3>
-<p>$35.000</p>
-<button onclick="addToCart('5kg',35000)">Agregar</button>
-</div>
-
-<div class="product">
-<img src="Milanesapollo.jpeg" alt="Milanesa">
-<h3>Milanesa de Pollo x 10kg</h3>
-<p>$68.000</p>
-<button onclick="addToCart('10kg',68000)">Agregar</button>
-</div>
-
-<div class="product">
-<img src="Milanesapollo.jpeg" alt="Milanesa">
-<h3>Milanesa de Pollo x 25kg</h3>
-<p>$160.000</p>
-<button onclick="addToCart('25kg',160000)">Agregar</button>
-</div>
-
-</div>
-</div>
-
-<div class="card">
-<h2>Carrito</h2>
-<ul id="cart-list"></ul>
-<p>Total: $<span id="total">0</span></p>
-<button onclick="sendWhatsApp()">Finalizar Compra</button>
-</div>
-
-<h2>Ubicación</h2>
-<iframe src="https://www.google.com/maps?q=Miguel%20Cane%202575,%20Barranqueras,%20Chaco&output=embed"></iframe>
-
-</section>
-
-<a href="https://wa.me/543624505931" class="whatsapp-float">💬</a>
-
-<script>
-let cart=[];
-let total=0;
-
-function addToCart(product,price){
-  cart.push(product+" - $"+price);
-  total+=price;
-  document.getElementById("total").innerText=total;
-
-  let li=document.createElement("li");
-  li.innerText=product+" - $"+price;
-  document.getElementById("cart-list").appendChild(li);
-}
-
-function sendWhatsApp(){
-  let message="Hola! Quiero comprar:%0A"+cart.join("%0A")+"%0ATotal: $"+total;
-  window.open("https://wa.me/543624505931?text="+message);
-}
-
-/* Contador animado */
-let count=0;
-let target=500;
-let counter=document.getElementById("counter");
-
-let interval=setInterval(()=>{
-  count+=5;
-  counter.innerText="+"+count;
-  if(count>=target){
-    counter.innerText="+500";
-    clearInterval(interval);
-  }
-},20);
-</script>
-
-</body>
+<!-- TOAST -->  
+<div id="toast" class="toast">Producto agregado ✔</div>  
+  
+<script>  
+let cart=[];  
+let total=0;  
+  
+function showToast(){  
+  let toast=document.getElementById("toast");  
+  toast.classList.add("show");  
+  setTimeout(()=>{  
+    toast.classList.remove("show");  
+  },2000);  
+}  
+  
+function addToCart(product,price){  
+  cart.push(product+" - $"+price);  
+  total+=price;  
+  document.getElementById("total").innerText=total;  
+  
+  let li=document.createElement("li");  
+  li.innerText=product+" - $"+price;  
+  document.getElementById("cart-list").appendChild(li);  
+  
+  showToast();  
+}  
+  
+function sendWhatsApp(){  
+  let message="Hola! Quiero comprar:%0A"+cart.join("%0A")+"%0ATotal: $"+total;  
+  window.open("https://wa.me/543624505931?text="+message);  
+}  
+  
+/* Contador animado */  
+let count=0;  
+let target=500;  
+let counter=document.getElementById("counter");  
+  
+let interval=setInterval(()=>{  
+  count+=5;  
+  counter.innerText="+"+count;  
+  if(count>=target){  
+    counter.innerText="+500";  
+    clearInterval(interval);  
+  }  
+},20);  
+  
+</script>  
+  
+</body>  
 </html>

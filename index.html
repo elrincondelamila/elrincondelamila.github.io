@@ -52,7 +52,7 @@ background:white;
 box-shadow:3px 0 10px rgba(0,0,0,0.2);
 padding:20px;
 transition:0.3s;
-z-index:999;
+z-index:1001;
 }
 
 .dark .menu{
@@ -63,6 +63,21 @@ background:#1f1f1f;
 left:0;
 }
 
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+display:none;
+z-index:1000;
+}
+
+.overlay.show{
+display:block;
+}
+
 .menu button{
 width:100%;
 margin:10px 0;
@@ -71,7 +86,7 @@ font-size:16px;
 cursor:pointer;
 }
 
-/* ADMIN PANEL */
+/* ADMIN */
 
 .admin{
 display:none;
@@ -79,11 +94,11 @@ margin-top:20px;
 }
 
 .admin input{
-width:80px;
+width:90px;
 margin:5px;
 }
 
-/* BARRA PROMOCION */
+/* PROMO */
 
 .promo{
 background:#ff9800;
@@ -152,7 +167,7 @@ margin-top:15px;
 font-size:18px;
 }
 
-/* contador clientes */
+/* contador */
 
 .contador{
 text-align:center;
@@ -255,6 +270,8 @@ border-radius:10px;
 </head>
 
 <body>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
 <div class="menu" id="menu">
 
@@ -429,17 +446,18 @@ p5:130000
 
 function mostrarPrecios(){
 
-document.getElementById("precio1").textContent="$"+precios.p1;
-document.getElementById("precio2").textContent="$"+precios.p2;
-document.getElementById("precio3").textContent="$"+precios.p3;
-document.getElementById("precio4").textContent="$"+precios.p4;
-document.getElementById("precio5").textContent="$"+precios.p5;
+precio1.textContent="$"+precios.p1;
+precio2.textContent="$"+precios.p2;
+precio3.textContent="$"+precios.p3;
+precio4.textContent="$"+precios.p4;
+precio5.textContent="$"+precios.p5;
 
 }
 
 function toggleMenu(){
 
-document.getElementById("menu").classList.toggle("open");
+menu.classList.toggle("open");
+overlay.classList.toggle("show");
 
 }
 
@@ -449,11 +467,11 @@ let a=document.getElementById("admin");
 
 a.style.display = a.style.display==="block"?"none":"block";
 
-document.getElementById("p1").value=precios.p1;
-document.getElementById("p2").value=precios.p2;
-document.getElementById("p3").value=precios.p3;
-document.getElementById("p4").value=precios.p4;
-document.getElementById("p5").value=precios.p5;
+p1.value=precios.p1;
+p2.value=precios.p2;
+p3.value=precios.p3;
+p4.value=precios.p4;
+p5.value=precios.p5;
 
 }
 
@@ -534,7 +552,7 @@ suma+=item.precio;
 
 total.textContent="$"+suma;
 
-document.getElementById("cantidadCarrito").textContent=carrito.length;
+cantidadCarrito.textContent=carrito.length;
 
 }
 
@@ -580,4 +598,5 @@ actualizar();
 </script>
 
 </body>
-</html>
+  </html>
+  

@@ -25,10 +25,44 @@ background:white;
 padding:20px;
 text-align:center;
 box-shadow:0 2px 10px rgba(0,0,0,0.1);
+position:relative;
 }
 
 .dark header{
 background:#1a1a1a;
+}
+
+/* carrito arriba */
+#carritoTop{
+position:absolute;
+top:20px;
+right:80px;
+font-size:18px;
+font-weight:bold;
+background:#ff9800;
+color:white;
+padding:6px 12px;
+border-radius:20px;
+}
+
+/* notificacion */
+#notificacion{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#4CAF50;
+color:white;
+padding:12px 25px;
+border-radius:6px;
+display:none;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+animation:fade 0.4s;
+}
+
+@keyframes fade{
+from{opacity:0; transform:translate(-50%,20px);}
+to{opacity:1; transform:translate(-50%,0);}
 }
 
 .hero{
@@ -94,10 +128,6 @@ width:100%;
 border-radius:10px;
 }
 
-input{
-width:50px;
-}
-
 .carrito{
 margin-top:40px;
 background:white;
@@ -160,10 +190,18 @@ cursor:pointer;
 
 <body>
 
+<div id="notificacion">Producto agregado al carrito</div>
+
 <button class="dark-toggle" onclick="modoOscuro()">🌙</button>
 
 <header>
+
 <h2>El Rincón de la Mila</h2>
+
+<div id="carritoTop">
+🛒 <span id="cantidadCarrito">0</span>
+</div>
+
 </header>
 
 <section class="hero">
@@ -183,62 +221,47 @@ cursor:pointer;
 
 <div class="card">
 <img src="Milanesapollo.jpeg">
-<h3>3kg</h3>
+<h3>Milanesa de pollo 3kg</h3>
 <p>$15000</p>
-Cantidad
 <input type="number" id="c1" value="1">
 <br><br>
-<button class="btn" onclick="agregar('Milanesa de pollo 3kg',15000,'c1')">
-Agregar
-</button>
+<button class="btn" onclick="agregar('Milanesa de pollo 3kg',15000,'c1')">Agregar</button>
 </div>
 
 <div class="card">
 <img src="Milanesapollo.jpeg">
-<h3>5kg</h3>
+<h3>Milanesa de pollo 5kg</h3>
 <p>$24000</p>
-Cantidad
 <input type="number" id="c2" value="1">
 <br><br>
-<button class="btn" onclick="agregar('Milanesa de pollo 5kg',24000,'c2')">
-Agregar
-</button>
+<button class="btn" onclick="agregar('Milanesa de pollo 5kg',24000,'c2')">Agregar</button>
 </div>
 
 <div class="card">
 <img src="Milanesapollo.jpeg">
-<h3>10kg</h3>
+<h3>Milanesa de pollo 10kg</h3>
 <p>$45000</p>
-Cantidad
 <input type="number" id="c3" value="1">
 <br><br>
-<button class="btn" onclick="agregar('Milanesa de pollo 10kg',45000,'c3')">
-Agregar
-</button>
+<button class="btn" onclick="agregar('Milanesa de pollo 10kg',45000,'c3')">Agregar</button>
 </div>
 
 <div class="card">
 <img src="Milanesapollo.jpeg">
-<h3>15kg</h3>
+<h3>Milanesa de pollo 15kg</h3>
 <p>$65000</p>
-Cantidad
 <input type="number" id="c4" value="1">
 <br><br>
-<button class="btn" onclick="agregar('Milanesa de pollo 15kg',65000,'c4')">
-Agregar
-</button>
+<button class="btn" onclick="agregar('Milanesa de pollo 15kg',65000,'c4')">Agregar</button>
 </div>
 
 <div class="card">
 <img src="Milanesapollo.jpeg">
-<h3>25kg</h3>
+<h3>Milanesa de pollo 25kg</h3>
 <p>$100000</p>
-Cantidad
 <input type="number" id="c5" value="1">
 <br><br>
-<button class="btn" onclick="agregar('Milanesa de pollo 25kg',100000,'c5')">
-Agregar
-</button>
+<button class="btn" onclick="agregar('Milanesa de pollo 25kg',100000,'c5')">Agregar</button>
 </div>
 
 </div>
@@ -251,9 +274,7 @@ Agregar
 
 <p>Total: <span id="total">$0</span></p>
 
-<button class="btn" onclick="finalizarCompra()">
-Finalizar compra
-</button>
+<button class="btn" onclick="finalizarCompra()">Finalizar compra</button>
 
 </div>
 
@@ -289,6 +310,22 @@ Finalizar compra
 
 </div>
 
+<button onclick="abrirAdmin()" style="opacity:0.2">⚙</button>
+
+<div id="panelAdmin" style="display:none;background:white;padding:20px;margin:20px;border-radius:10px">
+
+<h3>Panel de precios</h3>
+
+3kg <input id="p1"><br>
+5kg <input id="p2"><br>
+10kg <input id="p3"><br>
+15kg <input id="p4"><br>
+25kg <input id="p5"><br><br>
+
+<button onclick="guardarPrecios()">Guardar</button>
+
+</div>
+
 <script>
 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -301,24 +338,36 @@ for(let i=0;i<cantidad;i++){
 carrito.push({nombre,precio});
 }
 
+navigator.vibrate(100);
+
+mostrarNotificacion();
+
 guardar();
+
 actualizar();
 
 }
 
 function eliminar(index){
+
 carrito.splice(index,1);
+
 guardar();
+
 actualizar();
+
 }
 
 function guardar(){
+
 localStorage.setItem("carrito",JSON.stringify(carrito));
+
 }
 
 function actualizar(){
 
 let lista=document.getElementById("listaCarrito");
+
 let total=document.getElementById("total");
 
 lista.innerHTML="";
@@ -340,6 +389,22 @@ suma+=item.precio;
 
 total.textContent="$"+suma;
 
+document.getElementById("cantidadCarrito").textContent=carrito.length;
+
+}
+
+function mostrarNotificacion(){
+
+let n=document.getElementById("notificacion");
+
+n.style.display="block";
+
+setTimeout(()=>{
+
+n.style.display="none";
+
+},2000);
+
 }
 
 function finalizarCompra(){
@@ -355,13 +420,57 @@ mensaje+="%0ATotal: $"+carrito.reduce((a,b)=>a+b.precio,0);
 window.open("https://wa.me/543624505931?text="+mensaje);
 
 carrito=[];
+
 guardar();
+
 actualizar();
 
 }
 
 function modoOscuro(){
+
 document.body.classList.toggle("dark");
+
+}
+
+let precios = JSON.parse(localStorage.getItem("precios")) || {
+p1:15000,
+p2:24000,
+p3:45000,
+p4:65000,
+p5:100000
+};
+
+function abrirAdmin(){
+
+let clave = prompt("Clave administrador");
+
+if(clave=="1234"){
+
+document.getElementById("panelAdmin").style.display="block";
+
+document.getElementById("p1").value=precios.p1;
+document.getElementById("p2").value=precios.p2;
+document.getElementById("p3").value=precios.p3;
+document.getElementById("p4").value=precios.p4;
+document.getElementById("p5").value=precios.p5;
+
+}
+
+}
+
+function guardarPrecios(){
+
+precios.p1=document.getElementById("p1").value;
+precios.p2=document.getElementById("p2").value;
+precios.p3=document.getElementById("p3").value;
+precios.p4=document.getElementById("p4").value;
+precios.p5=document.getElementById("p5").value;
+
+localStorage.setItem("precios",JSON.stringify(precios));
+
+alert("Precios guardados");
+
 }
 
 actualizar();

@@ -14,6 +14,8 @@ background:#fafafa;
 color:#222;
 }
 
+/* HEADER */
+
 header{
 background:#d62828;
 color:white;
@@ -25,8 +27,10 @@ header img{
 width:180px;
 }
 
+/* HERO */
+
 .hero{
-padding:20px;
+padding:30px;
 text-align:center;
 }
 
@@ -34,18 +38,53 @@ text-align:center;
 width:100%;
 max-width:500px;
 border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
-.section{
+.hero h2{
+margin-top:15px;
+}
+
+/* CONTADOR */
+
+.stats{
+display:flex;
+justify-content:center;
+gap:40px;
 padding:20px;
-max-width:1000px;
+background:white;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.stat{
+text-align:center;
+}
+
+.stat h3{
+margin:0;
+color:#d62828;
+font-size:28px;
+}
+
+.stat p{
+margin:5px 0;
+font-size:14px;
+}
+
+/* SECTIONS */
+
+.section{
+padding:30px;
+max-width:1100px;
 margin:auto;
 }
+
+/* PRODUCTS */
 
 .products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
+gap:25px;
 }
 
 .product{
@@ -53,6 +92,11 @@ background:white;
 border-radius:15px;
 box-shadow:0 5px 20px rgba(0,0,0,0.1);
 overflow:hidden;
+transition:0.3s;
+}
+
+.product:hover{
+transform:translateY(-5px);
 }
 
 .product img{
@@ -96,11 +140,28 @@ button:hover{
 background:#1ebe5d;
 }
 
+/* BENEFITS */
+
+.benefits{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+text-align:center;
+}
+
+.benefit{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+/* REVIEWS */
+
 .reviews{
 background:white;
 padding:20px;
 border-radius:15px;
-margin-top:20px;
 box-shadow:0 5px 20px rgba(0,0,0,0.08);
 }
 
@@ -109,9 +170,16 @@ border-bottom:1px solid #eee;
 padding:10px 0;
 }
 
+.review:last-child{
+border:none;
+}
+
 .stars{
 color:#ff9800;
+font-size:18px;
 }
+
+/* WHATSAPP */
 
 .whatsapp{
 position:fixed;
@@ -129,6 +197,8 @@ color:white;
 text-decoration:none;
 box-shadow:0 5px 20px rgba(0,0,0,0.2);
 }
+
+/* FOOTER */
 
 footer{
 text-align:center;
@@ -159,8 +229,34 @@ font-size:14px;
 
 <h2>Las milanesas más ricas de Barranqueras</h2>
 
+<p>Calidad premium • Empanado artesanal • Entrega rápida</p>
+
 </div>
 
+
+<!-- ESTADISTICAS -->
+
+<div class="stats">
+
+<div class="stat">
+<h3>+500</h3>
+<p>Clientes felices</p>
+</div>
+
+<div class="stat">
+<h3>+2</h3>
+<p>Años vendiendo</p>
+</div>
+
+<div class="stat">
+<h3>+1000kg</h3>
+<p>Milanesas vendidas</p>
+</div>
+
+</div>
+
+
+<!-- PRODUCTOS -->
 
 <div class="section">
 
@@ -238,10 +334,46 @@ font-size:14px;
 
 </div>
 
+
+</div>
+
+</div>
+
+
+<!-- BENEFICIOS -->
+
+<div class="section">
+
+<h2>¿Por qué elegirnos?</h2>
+
+<div class="benefits">
+
+<div class="benefit">
+<h3>🥩 Carne seleccionada</h3>
+<p>Elegimos los mejores cortes.</p>
+</div>
+
+<div class="benefit">
+<h3>👨‍🍳 Empanado artesanal</h3>
+<p>Preparadas como en casa.</p>
+</div>
+
+<div class="benefit">
+<h3>❄️ Congelado fresco</h3>
+<p>Conserva sabor y calidad.</p>
+</div>
+
+<div class="benefit">
+<h3>🚚 Entrega rápida</h3>
+<p>Pedidos por WhatsApp.</p>
 </div>
 
 </div>
 
+</div>
+
+
+<!-- OPINIONES -->
 
 <div class="section">
 
@@ -250,33 +382,21 @@ font-size:14px;
 <div class="reviews">
 
 <div class="review">
-
 <strong>Juan M.</strong>
-
 <div class="stars">★★★★★</div>
-
 <p>Muy tiernas, súper recomendadas.</p>
-
 </div>
 
 <div class="review">
-
 <strong>Carla G.</strong>
-
 <div class="stars">★★★★★</div>
-
 <p>Compré 3kg y rinden muchísimo.</p>
-
 </div>
 
 <div class="review">
-
 <strong>Matías R.</strong>
-
 <div class="stars">★★★★☆</div>
-
-<p>Muy buena calidad.</p>
-
+<p>Excelente calidad.</p>
 </div>
 
 </div>
@@ -286,7 +406,9 @@ font-size:14px;
 
 <footer>
 
-Miguel Cane 2575 · Barranqueras · Chaco
+Miguel Cane 2575 · Barranqueras · Chaco  
+<br><br>
+© 2026 El Rincón de la Mila
 
 </footer>
 

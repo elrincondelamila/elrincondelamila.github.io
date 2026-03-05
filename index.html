@@ -93,9 +93,7 @@ button:hover{background:#9d0208;}
   z-index:9999;  
 }  
   
-.toast.show{  
-  opacity:1;  
-}  
+.toast.show{opacity:1;}  
   
 .whatsapp-float{  
   position:fixed;  
@@ -119,6 +117,24 @@ iframe{
   border:0;  
   border-radius:20px;  
 }  
+
+/* Contador carrito */  
+.cart-counter{  
+  background:#d62828;  
+  color:white;  
+  padding:5px 10px;  
+  border-radius:50%;  
+  font-size:14px;  
+  margin-left:10px;  
+}  
+
+.remove-btn{  
+  background:black;  
+  padding:5px 10px;  
+  font-size:12px;  
+  margin-left:10px;  
+}  
+
 </style>  
 </head>  
   
@@ -142,28 +158,28 @@ iframe{
 <div class="products">  
   
 <div class="product">  
-<img src="Milanesapollo.jpeg" alt="Milanesa">  
+<img src="Milanesapollo.jpeg">  
 <h3>Milanesa de Pollo x 3kg</h3>  
 <p>$21.000</p>  
 <button onclick="addToCart('3kg',21000)">Agregar</button>  
 </div>  
   
 <div class="product">  
-<img src="Milanesapollo.jpeg" alt="Milanesa">  
+<img src="Milanesapollo.jpeg">  
 <h3>Milanesa de Pollo x 5kg</h3>  
 <p>$35.000</p>  
 <button onclick="addToCart('5kg',35000)">Agregar</button>  
 </div>  
   
 <div class="product">  
-<img src="Milanesapollo.jpeg" alt="Milanesa">  
+<img src="Milanesapollo.jpeg">  
 <h3>Milanesa de Pollo x 10kg</h3>  
 <p>$68.000</p>  
 <button onclick="addToCart('10kg',68000)">Agregar</button>  
 </div>  
   
 <div class="product">  
-<img src="Milanesapollo.jpeg" alt="Milanesa">  
+<img src="Milanesapollo.jpeg">  
 <h3>Milanesa de Pollo x 25kg</h3>  
 <p>$160.000</p>  
 <button onclick="addToCart('25kg',160000)">Agregar</button>  
@@ -173,7 +189,7 @@ iframe{
 </div>  
   
 <div class="card">  
-<h2>Carrito</h2>  
+<h2>Carrito <span class="cart-counter" id="cart-count">0</span></h2>  
 <ul id="cart-list"></ul>  
 <p>Total: $<span id="total">0</span></p>  
 <button onclick="sendWhatsApp()">Finalizar Compra</button>  
@@ -185,44 +201,61 @@ iframe{
 </section>  
   
 <a href="https://wa.me/543624505931" class="whatsapp-float">💬</a>  
-
-<!-- TOAST -->  
+  
 <div id="toast" class="toast">Producto agregado ✔</div>  
   
 <script>  
 let cart=[];  
 let total=0;  
-  
+
+function updateCartCount(){  
+  document.getElementById("cart-count").innerText=cart.length;  
+}  
+
+function removeItem(index){  
+  total -= cart[index].price;  
+  cart.splice(index,1);  
+  renderCart();  
+}  
+
+function renderCart(){  
+  let list=document.getElementById("cart-list");  
+  list.innerHTML="";  
+
+  cart.forEach((item,index)=>{  
+    let li=document.createElement("li");  
+    li.innerHTML=`${item.name} - $${item.price}  
+    <button class="remove-btn" onclick="removeItem(${index})">X</button>`;  
+    list.appendChild(li);  
+  });  
+
+  document.getElementById("total").innerText=total;  
+  updateCartCount();  
+}  
+
 function showToast(){  
   let toast=document.getElementById("toast");  
   toast.classList.add("show");  
-  setTimeout(()=>{  
-    toast.classList.remove("show");  
-  },2000);  
+  setTimeout(()=>toast.classList.remove("show"),2000);  
 }  
-  
+
 function addToCart(product,price){  
-  cart.push(product+" - $"+price);  
+  cart.push({name:product,price:price});  
   total+=price;  
-  document.getElementById("total").innerText=total;  
-  
-  let li=document.createElement("li");  
-  li.innerText=product+" - $"+price;  
-  document.getElementById("cart-list").appendChild(li);  
-  
+  renderCart();  
   showToast();  
 }  
-  
+
 function sendWhatsApp(){  
-  let message="Hola! Quiero comprar:%0A"+cart.join("%0A")+"%0ATotal: $"+total;  
+  let message="Hola! Quiero comprar:%0A"+cart.map(i=>i.name+" - $"+i.price).join("%0A")+"%0ATotal: $"+total;  
   window.open("https://wa.me/543624505931?text="+message);  
 }  
-  
+
 /* Contador animado */  
 let count=0;  
 let target=500;  
 let counter=document.getElementById("counter");  
-  
+
 let interval=setInterval(()=>{  
   count+=5;  
   counter.innerText="+"+count;  
@@ -231,7 +264,7 @@ let interval=setInterval(()=>{
     clearInterval(interval);  
   }  
 },20);  
-  
+
 </script>  
   
 </body>  

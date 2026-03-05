@@ -9,122 +9,111 @@
 
 body{
 margin:0;
-font-family:'Segoe UI',sans-serif;
-background:#f4f4f4;
+font-family:Arial, sans-serif;
+background:#fafafa;
 color:#222;
-transition:0.3s;
 }
 
 header{
-background:white;
+background:#d62828;
+color:white;
+padding:20px;
 text-align:center;
-padding:30px;
 }
 
 header img{
-max-width:250px;
+width:180px;
 }
 
-section{
-padding:40px 20px;
-max-width:1100px;
-margin:auto;
-}
-
-.card{
-background:white;
-padding:30px;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.08);
-margin-bottom:40px;
-}
-
-h2{text-align:center}
-
-.counter{
-font-size:32px;
+.hero{
+padding:20px;
 text-align:center;
-color:#d62828;
-font-weight:bold;
+}
+
+.hero img{
+width:100%;
+max-width:500px;
+border-radius:20px;
+}
+
+.section{
+padding:20px;
+max-width:1000px;
+margin:auto;
 }
 
 .products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
+gap:20px;
 }
 
 .product{
 background:white;
-padding:20px;
 border-radius:15px;
-box-shadow:0 10px 20px rgba(0,0,0,0.05);
-text-align:center;
-position:relative;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+overflow:hidden;
+}
+
+.product img{
+width:100%;
+height:200px;
+object-fit:cover;
+}
+
+.product-info{
+padding:15px;
+}
+
+.price{
+font-size:22px;
+font-weight:bold;
+color:#d62828;
 }
 
 .badge{
-position:absolute;
-top:10px;
-left:10px;
 background:#ff9800;
 color:white;
 padding:5px 10px;
 border-radius:10px;
 font-size:12px;
+display:inline-block;
+margin-bottom:10px;
 }
 
-.product img{
+button{
+background:#25D366;
+border:none;
+padding:12px;
 width:100%;
-border-radius:15px;
-height:200px;
-object-fit:cover;
+color:white;
+font-size:16px;
+border-radius:10px;
+cursor:pointer;
 }
 
-.qty{
-width:60px;
-padding:5px;
-margin-top:10px;
+button:hover{
+background:#1ebe5d;
+}
+
+.reviews{
+background:white;
+padding:20px;
+border-radius:15px;
+margin-top:20px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
 }
 
 .review{
-background:#fafafa;
-padding:20px;
-border-radius:15px;
-margin-bottom:15px;
+border-bottom:1px solid #eee;
+padding:10px 0;
 }
 
 .stars{
 color:#ff9800;
 }
 
-form input,form textarea,form select{
-width:100%;
-padding:10px;
-margin:10px 0;
-border-radius:10px;
-border:1px solid #ccc;
-}
-
-button{
-background:#d62828;
-color:white;
-border:none;
-padding:10px 20px;
-border-radius:8px;
-cursor:pointer;
-}
-
-button:hover{background:#9d0208;}
-
-.remove-btn{
-background:black;
-padding:5px 10px;
-font-size:12px;
-margin-left:10px;
-}
-
-.whatsapp-float{
+.whatsapp{
 position:fixed;
 bottom:20px;
 right:20px;
@@ -136,32 +125,17 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size:30px;
-text-decoration:none;
 color:white;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
+text-decoration:none;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
 }
 
-.popup{
-position:fixed;
-bottom:90px;
-left:20px;
-background:white;
-padding:15px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
-display:none;
+footer{
+text-align:center;
+padding:30px;
+color:#666;
+font-size:14px;
 }
-
-body.dark{
-background:#121212;
-color:#f1f1f1;
-}
-
-body.dark header{background:#1e1e1e;}
-
-body.dark .card{background:#1e1e1e;}
-
-body.dark .product{background:#1e1e1e;}
 
 </style>
 </head>
@@ -172,99 +146,93 @@ body.dark .product{background:#1e1e1e;}
 
 <img src="BackgroundEraser_20260304_034450533.png">
 
-<p>Milanesas artesanales premium</p>
+<h2>El Rincón de la Mila</h2>
 
-<button id="darkToggle">🌙 Modo Oscuro</button>
+<p>Milanesas artesanales premium</p>
 
 </header>
 
-<section>
 
-<div class="card">
+<div class="hero">
 
-<h2>👀 Visitas a la página</h2>
+<img src="Milanesapollo.jpeg">
 
-<div class="counter" id="views">0</div>
-
-</div>
-
-<div class="card">
-
-<h2>+ Clientes satisfechos</h2>
-
-<div class="counter">+500</div>
+<h2>Las milanesas más ricas de Barranqueras</h2>
 
 </div>
 
-<div class="card">
 
-<h2>Nuestros Productos</h2>
+<div class="section">
+
+<h2>Productos</h2>
 
 <div class="products">
 
+
 <div class="product">
 
 <img src="Milanesapollo.jpeg">
+
+<div class="product-info">
 
 <h3>Milanesa x 1kg</h3>
 
-<p>$8.000</p>
+<p class="price">$8.000</p>
 
-<input type="number" value="1" min="1" class="qty" id="q1">
-
-<br><br>
-
-<button onclick="addToCart('1kg',8000,'q1')">Agregar</button>
+<button onclick="order('1kg - $8.000')">Pedir</button>
 
 </div>
 
+</div>
+
+
 <div class="product">
+
+<img src="Milanesapollo.jpeg">
+
+<div class="product-info">
 
 <div class="badge">🔥 Más vendido</div>
 
-<img src="Milanesapollo.jpeg">
-
 <h3>Milanesa x 3kg</h3>
 
-<p>$18.000</p>
+<p class="price">$18.000</p>
 
-<input type="number" value="1" min="1" class="qty" id="q2">
-
-<br><br>
-
-<button onclick="addToCart('3kg',18000,'q2')">Agregar</button>
+<button onclick="order('3kg - $18.000')">Pedir</button>
 
 </div>
+
+</div>
+
 
 <div class="product">
 
 <img src="Milanesapollo.jpeg">
+
+<div class="product-info">
 
 <h3>Milanesa x 10kg</h3>
 
-<p>$55.000</p>
+<p class="price">$55.000</p>
 
-<input type="number" value="1" min="1" class="qty" id="q3">
-
-<br><br>
-
-<button onclick="addToCart('10kg',55000,'q3')">Agregar</button>
+<button onclick="order('10kg - $55.000')">Pedir</button>
 
 </div>
+
+</div>
+
 
 <div class="product">
 
 <img src="Milanesapollo.jpeg">
 
+<div class="product-info">
+
 <h3>Milanesa x 25kg</h3>
 
-<p>$120.000</p>
+<p class="price">$120.000</p>
 
-<input type="number" value="1" min="1" class="qty" id="q4">
-
-<br><br>
-
-<button onclick="addToCart('25kg',120000,'q4')">Agregar</button>
+<button onclick="order('25kg - $120.000')">Pedir</button>
 
 </div>
 
@@ -272,217 +240,69 @@ body.dark .product{background:#1e1e1e;}
 
 </div>
 
-<div class="card">
+</div>
 
-<h2>⭐ Opiniones de Clientes</h2>
 
-<div id="reviews"></div>
+<div class="section">
 
-<h3>Dejá tu opinión</h3>
+<h2>Opiniones de clientes</h2>
 
-<form onsubmit="addReview(event)">
+<div class="reviews">
 
-<input type="text" id="name" placeholder="Tu nombre" required>
+<div class="review">
 
-<select id="rating">
+<strong>Juan M.</strong>
 
-<option value="5">★★★★★</option>
-<option value="4">★★★★</option>
-<option value="3">★★★</option>
-<option value="2">★★</option>
-<option value="1">★</option>
+<div class="stars">★★★★★</div>
 
-</select>
-
-<textarea id="comment" placeholder="Comentario"></textarea>
-
-<button type="submit">Publicar</button>
-
-</form>
+<p>Muy tiernas, súper recomendadas.</p>
 
 </div>
 
-<div class="card">
+<div class="review">
 
-<h2>Carrito</h2>
+<strong>Carla G.</strong>
 
-<ul id="cart"></ul>
+<div class="stars">★★★★★</div>
 
-<p><strong>Total: $<span id="total">0</span></strong></p>
-
-<button onclick="sendWhatsApp()">Finalizar compra</button>
+<p>Compré 3kg y rinden muchísimo.</p>
 
 </div>
 
-</section>
+<div class="review">
 
-<div class="popup" id="popup"></div>
+<strong>Matías R.</strong>
 
-<a href="https://wa.me/543624505931" class="whatsapp-float">💬</a>
+<div class="stars">★★★★☆</div>
+
+<p>Muy buena calidad.</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<footer>
+
+Miguel Cane 2575 · Barranqueras · Chaco
+
+</footer>
+
+
+<a href="https://wa.me/543624505931" class="whatsapp">💬</a>
+
 
 <script>
 
-/* CONTADOR DE VISITAS */
+function order(product){
 
-let views = localStorage.getItem("views");
-
-if(!views){views=320;}
-
-views++;
-
-localStorage.setItem("views",views);
-
-document.getElementById("views").innerText=views;
-
-
-/* RESEÑAS AUTOMATICAS */
-
-let reviews=[
-
-{name:"Juan M.",rating:5,comment:"Las mejores milanesas que probé 🔥"},
-{name:"Carla G.",rating:5,comment:"Muy tiernas y rinden mucho"},
-{name:"Matías R.",rating:4,comment:"Excelente calidad"},
-{name:"Sofía L.",rating:5,comment:"Volvería a comprar sin duda"},
-{name:"Lucas P.",rating:5,comment:"Muy recomendable"}
-
-];
-
-function renderReviews(){
-
-let container=document.getElementById("reviews");
-
-container.innerHTML="";
-
-reviews.forEach(r=>{
-
-let div=document.createElement("div");
-
-div.className="review";
-
-div.innerHTML=`<strong>${r.name}</strong>
-<div class="stars">${"★".repeat(r.rating)}</div>
-<p>${r.comment}</p>`;
-
-container.appendChild(div);
-
-});
-
-}
-
-function addReview(e){
-
-e.preventDefault();
-
-let name=document.getElementById("name").value;
-
-let comment=document.getElementById("comment").value;
-
-let rating=document.getElementById("rating").value;
-
-reviews.push({name,comment,rating});
-
-renderReviews();
-
-document.getElementById("name").value="";
-document.getElementById("comment").value="";
-
-}
-
-/* CARRITO */
-
-let cart=[];
-let total=0;
-
-function addToCart(name,price,id){
-
-let qty=document.getElementById(id).value;
-
-let subtotal=price*qty;
-
-cart.push({name,qty,subtotal});
-
-total+=subtotal;
-
-renderCart();
-
-}
-
-function renderCart(){
-
-let ul=document.getElementById("cart");
-
-ul.innerHTML="";
-
-cart.forEach(item=>{
-
-let li=document.createElement("li");
-
-li.innerText=item.qty+" x "+item.name+" - $"+item.subtotal;
-
-ul.appendChild(li);
-
-});
-
-document.getElementById("total").innerText=total;
-
-}
-
-function sendWhatsApp(){
-
-let msg="Hola quiero comprar:%0A";
-
-cart.forEach(i=>{
-
-msg+=i.qty+" x "+i.name+" - $"+i.subtotal+"%0A";
-
-});
-
-msg+="Total: $"+total;
+let msg="Hola quiero pedir milanesas: "+product;
 
 window.open("https://wa.me/543624505931?text="+msg);
 
 }
-
-/* POPUP VENTAS */
-
-let names=["Juan","Carla","Lucas","Matías","Sofía","Pedro","Ana"];
-
-let products=["1kg","3kg","10kg"];
-
-function fakeSale(){
-
-let popup=document.getElementById("popup");
-
-let name=names[Math.floor(Math.random()*names.length)];
-
-let product=products[Math.floor(Math.random()*products.length)];
-
-popup.innerText=name+" compró milanesa x "+product;
-
-popup.style.display="block";
-
-setTimeout(()=>{
-
-popup.style.display="none";
-
-},4000);
-
-}
-
-setInterval(fakeSale,9000);
-
-
-/* DARK MODE */
-
-const btn=document.getElementById("darkToggle");
-
-btn.onclick=()=>{
-
-document.body.classList.toggle("dark");
-
-};
-
-renderReviews();
 
 </script>
 

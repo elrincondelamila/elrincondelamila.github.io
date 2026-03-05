@@ -32,7 +32,59 @@ position:relative;
 background:#1a1a1a;
 }
 
+/* MENU */
+
+.menuBtn{
+position:absolute;
+left:20px;
+top:20px;
+font-size:25px;
+cursor:pointer;
+}
+
+.menu{
+position:fixed;
+left:-260px;
+top:0;
+width:260px;
+height:100%;
+background:white;
+box-shadow:3px 0 10px rgba(0,0,0,0.2);
+padding:20px;
+transition:0.3s;
+z-index:999;
+}
+
+.dark .menu{
+background:#1f1f1f;
+}
+
+.menu.open{
+left:0;
+}
+
+.menu button{
+width:100%;
+margin:10px 0;
+padding:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+/* ADMIN PANEL */
+
+.admin{
+display:none;
+margin-top:20px;
+}
+
+.admin input{
+width:80px;
+margin:5px;
+}
+
 /* BARRA PROMOCION */
+
 .promo{
 background:#ff9800;
 color:white;
@@ -199,24 +251,34 @@ border:0;
 border-radius:10px;
 }
 
-/* modo oscuro */
-
-.dark-toggle{
-position:fixed;
-top:15px;
-left:15px;
-background:black;
-color:white;
-border:none;
-padding:10px;
-border-radius:6px;
-cursor:pointer;
-}
-
 </style>
 </head>
 
 <body>
+
+<div class="menu" id="menu">
+
+<h3>Menú</h3>
+
+<button onclick="modoOscuro()">🌙 Modo oscuro</button>
+
+<button onclick="mostrarAdmin()">⚙️ Panel admin</button>
+
+<div class="admin" id="admin">
+
+<h4>Editar precios</h4>
+
+3kg <input id="p1"><br>
+5kg <input id="p2"><br>
+10kg <input id="p3"><br>
+15kg <input id="p4"><br>
+25kg <input id="p5"><br><br>
+
+<button onclick="guardarPrecios()">Guardar precios</button>
+
+</div>
+
+</div>
 
 <div class="promo">
 🔥 OFERTA: 10% OFF en compras de 10kg o más
@@ -224,9 +286,9 @@ cursor:pointer;
 
 <div id="notificacion">Producto agregado al carrito</div>
 
-<button class="dark-toggle" onclick="modoOscuro()">🌙</button>
-
 <header>
+
+<div class="menuBtn" onclick="toggleMenu()">☰</div>
 
 <h2>El Rincón de la Mila</h2>
 
@@ -266,47 +328,47 @@ cursor:pointer;
 <div class="card">
 <img src="Milanesapollo.jpeg">
 <h3>Milanesa de pollo 3kg</h3>
-<p>$15000</p>
+<p id="precio1"></p>
 <input type="number" id="c1" value="1">
 <br><br>
-<button onclick="agregar('Milanesa de pollo 3kg',15000,'c1')">Agregar</button>
+<button onclick="agregar('Milanesa de pollo 3kg',precios.p1,'c1')">Agregar</button>
 </div>
 
 <div class="card">
 <img src="Milanesapollo.jpeg">
 <h3>Milanesa de pollo 5kg</h3>
-<p>$24000</p>
+<p id="precio2"></p>
 <input type="number" id="c2" value="1">
 <br><br>
-<button onclick="agregar('Milanesa de pollo 5kg',24000,'c2')">Agregar</button>
+<button onclick="agregar('Milanesa de pollo 5kg',precios.p2,'c2')">Agregar</button>
 </div>
 
 <div class="card">
 <span class="badge">Más vendido</span>
 <img src="Milanesapollo.jpeg">
 <h3>Milanesa de pollo 10kg</h3>
-<p>$45000</p>
+<p id="precio3"></p>
 <input type="number" id="c3" value="1">
 <br><br>
-<button onclick="agregar('Milanesa de pollo 10kg',45000,'c3')">Agregar</button>
+<button onclick="agregar('Milanesa de pollo 10kg',precios.p3,'c3')">Agregar</button>
 </div>
 
 <div class="card">
 <img src="Milanesapollo.jpeg">
 <h3>Milanesa de pollo 15kg</h3>
-<p>$65000</p>
+<p id="precio4"></p>
 <input type="number" id="c4" value="1">
 <br><br>
-<button onclick="agregar('Milanesa de pollo 15kg',65000,'c4')">Agregar</button>
+<button onclick="agregar('Milanesa de pollo 15kg',precios.p4,'c4')">Agregar</button>
 </div>
 
 <div class="card">
 <img src="Milanesapollo.jpeg">
 <h3>Milanesa de pollo 25kg</h3>
-<p>$100000</p>
+<p id="precio5"></p>
 <input type="number" id="c5" value="1">
 <br><br>
-<button onclick="agregar('Milanesa de pollo 25kg',100000,'c5')">Agregar</button>
+<button onclick="agregar('Milanesa de pollo 25kg',precios.p5,'c5')">Agregar</button>
 </div>
 
 </div>
@@ -347,12 +409,6 @@ cursor:pointer;
 
 </div>
 
-<h2>Clientes también compraron</h2>
-
-<p style="text-align:center">
-Pack familiar 10kg + 3kg 🔥
-</p>
-
 <h2>Ubicación</h2>
 
 <div class="mapa">
@@ -363,6 +419,62 @@ Pack familiar 10kg + 3kg 🔥
 
 <script>
 
+let precios = JSON.parse(localStorage.getItem("precios")) || {
+p1:18000,
+p2:30000,
+p3:55000,
+p4:90000,
+p5:130000
+};
+
+function mostrarPrecios(){
+
+document.getElementById("precio1").textContent="$"+precios.p1;
+document.getElementById("precio2").textContent="$"+precios.p2;
+document.getElementById("precio3").textContent="$"+precios.p3;
+document.getElementById("precio4").textContent="$"+precios.p4;
+document.getElementById("precio5").textContent="$"+precios.p5;
+
+}
+
+function toggleMenu(){
+
+document.getElementById("menu").classList.toggle("open");
+
+}
+
+function mostrarAdmin(){
+
+let a=document.getElementById("admin");
+
+a.style.display = a.style.display==="block"?"none":"block";
+
+document.getElementById("p1").value=precios.p1;
+document.getElementById("p2").value=precios.p2;
+document.getElementById("p3").value=precios.p3;
+document.getElementById("p4").value=precios.p4;
+document.getElementById("p5").value=precios.p5;
+
+}
+
+function guardarPrecios(){
+
+precios={
+p1:parseInt(p1.value),
+p2:parseInt(p2.value),
+p3:parseInt(p3.value),
+p4:parseInt(p4.value),
+p5:parseInt(p5.value)
+};
+
+localStorage.setItem("precios",JSON.stringify(precios));
+
+mostrarPrecios();
+
+alert("Precios actualizados");
+
+}
+
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 function agregar(nombre,precio,input){
@@ -372,8 +484,6 @@ let cantidad=document.getElementById(input).value;
 for(let i=0;i<cantidad;i++){
 carrito.push({nombre,precio});
 }
-
-navigator.vibrate(100);
 
 mostrarNotificacion();
 
@@ -464,6 +574,7 @@ document.body.classList.toggle("dark");
 
 }
 
+mostrarPrecios();
 actualizar();
 
 </script>

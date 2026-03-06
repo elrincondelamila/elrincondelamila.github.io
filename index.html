@@ -263,9 +263,10 @@ iframe{
 <h3>Tu Carrito</h3>  
 <div id="cart-list"></div>  
 <hr>  
-<p>Total: $<span id="total">0</span></p>  
-<button onclick="sendWhatsApp()">Finalizar Compra</button>  
-</div>  
+<p>Total: $<span id="total">0</span></p>
+<button id="checkoutBtn" onclick="sendWhatsApp()" style="display:none;margin-top:10px;">
+Finalizar Compra
+</button>  
 
 <script>  
 

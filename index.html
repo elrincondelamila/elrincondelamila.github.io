@@ -326,25 +326,38 @@ function changeQty(index,change){
    total += cart[index].price * change;  
  }  
 
- renderCart();  
-}  
+ function renderCart(){
+ let list=document.getElementById("cart-list");
+ list.innerHTML="";
 
-function sendWhatsApp(){  
- let msg="Hola quiero comprar:%0A";  
+ cart.forEach((item,index)=>{
+   let div=document.createElement("div");
+   div.className="cart-item";
 
- cart.forEach(i=>{  
-   msg+=i.name+" x"+i.qty+" - $"+(i.price*i.qty)+"%0A";  
- });  
+   div.innerHTML=`
+   <div style="display:flex;align-items:center;">
+   <img src="Milanesapollo.jpeg">
+   <div>${item.name}<br>$${item.price}</div>
+   </div>
 
- msg+="Total: $"+total;  
+   <div>
+   <button class="qty-btn" onclick="changeQty(${index},-1)">-</button>
+   ${item.qty}
+   <button class="qty-btn" onclick="changeQty(${index},1)">+</button>
+   </div>
+   `;
 
- window.open("https://wa.me/543624505931?text="+msg);  
-}  
+   list.appendChild(div);
+ });
 
-function showToast(){  
- let toast=document.getElementById("toast");  
- toast.classList.add("show");  
- setTimeout(()=>toast.classList.remove("show"),2000);  
+ document.getElementById("total").innerText=total;
+ updateBadge();
+
+ if(cart.length > 0){
+   document.getElementById("checkoutBtn").style.display="block";
+ }else{
+   document.getElementById("checkoutBtn").style.display="none";
+ }
 }  
 
 /* contador */  

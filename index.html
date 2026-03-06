@@ -1,292 +1,324 @@
-<!DOCTYPE html>  
-<html>  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>El Rincón de la Mila</title>  
+<!DOCTYPE html>    
+<html>    
+<head>    
+<meta charset="UTF-8">    
+<meta name="viewport" content="width=device-width, initial-scale=1.0">    
+<title>El Rincón de la Mila</title>    
+  
+<style>    
+body{    
+  margin:0;    
+  font-family:'Segoe UI', sans-serif;    
+  background:#f4f4f4;    
+  color:#222;    
+}    
+  
+header{    
+  background:white;    
+  text-align:center;    
+  padding:30px;    
+  position:relative;    
+}    
+  
+header img{    
+  max-width:250px;    
+}    
+  
+.banner{    
+  background:#d62828;    
+  color:white;    
+  text-align:center;    
+  padding:10px;    
+  font-weight:bold;    
+}    
+  
+.cart-icon{    
+  position:absolute;    
+  right:30px;    
+  top:30px;    
+  cursor:pointer;    
+  font-size:28px;    
+}    
+  
+.cart-badge{    
+  background:red;    
+  color:white;    
+  font-size:14px;    
+  padding:3px 8px;    
+  border-radius:50%;    
+  position:absolute;    
+  top:-8px;    
+  right:-10px;    
+}    
+  
+.cart-panel{    
+  position:fixed;    
+  right:-400px;    
+  top:0;    
+  width:350px;    
+  height:100%;    
+  background:white;    
+  box-shadow:-5px 0 20px rgba(0,0,0,0.2);    
+  padding:20px;    
+  transition:0.4s ease;    
+  overflow:auto;    
+  z-index:10000;    
+}    
+  
+.cart-panel.active{    
+  right:0;    
+}    
+  
+.close-cart{    
+  background:black;    
+  color:white;    
+  padding:5px 10px;    
+  border:none;    
+  cursor:pointer;    
+  border-radius:5px;    
+  margin-bottom:10px;    
+}    
+  
+section{    
+  padding:40px 20px;    
+  max-width:1100px;    
+  margin:auto;    
+}    
+  
+.card{    
+  background:white;    
+  padding:30px;    
+  border-radius:20px;    
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);    
+  margin-bottom:40px;    
+  text-align:center;    
+}    
+  
+h2{text-align:center;margin-bottom:20px;}    
+  
+.counter{    
+  font-size:32px;    
+  text-align:center;    
+  color:#d62828;    
+  font-weight:bold;    
+}    
+  
+.products{    
+  display:grid;    
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));    
+  gap:30px;    
+}    
+  
+.product{    
+  background:white;    
+  padding:20px;    
+  border-radius:15px;    
+  box-shadow:0 10px 20px rgba(0,0,0,0.05);    
+  text-align:center;    
+  transition:0.3s;    
+}    
+  
+.product:hover{    
+ transform:scale(1.05);    
+}    
+  
+.product img{    
+  width:100%;    
+  border-radius:15px;    
+  height:200px;    
+  object-fit:cover;    
+}    
+  
+button{    
+  background:#d62828;    
+  color:white;    
+  border:none;    
+  padding:10px 20px;    
+  border-radius:8px;    
+  cursor:pointer;    
+  transition:0.2s;    
+}    
+  
+button:hover{background:#9d0208;transform:scale(1.05);}    
+  
+.cart-item{    
+  display:flex;    
+  align-items:center;    
+  justify-content:space-between;    
+  margin-bottom:10px;    
+  padding:8px;    
+  border-bottom:1px solid #ddd;    
+}    
+  
+.cart-item img{    
+  width:40px;    
+  height:40px;    
+  border-radius:8px;    
+  object-fit:cover;    
+  margin-right:8px;    
+}    
+  
+.qty-btn{    
+  background:black;    
+  padding:2px 6px;    
+  font-size:14px;    
+  margin:0 3px;    
+}    
+  
+.toast{    
+  position:fixed;    
+  top:20px;    
+  right:20px;    
+  background:#25D366;    
+  color:white;    
+  padding:15px 20px;    
+  border-radius:10px;    
+  opacity:0;    
+  transition:0.4s;    
+  z-index:9999;    
+}    
+  
+.toast.show{opacity:1;}    
+  
+.whatsapp-float{    
+  position:fixed;    
+  bottom:20px;    
+  right:20px;    
+  background:#25D366;    
+  width:60px;    
+  height:60px;    
+  border-radius:50%;    
+  display:flex;    
+  align-items:center;    
+  justify-content:center;    
+  font-size:28px;    
+  text-decoration:none;    
+  color:white;    
+}    
+  
+iframe{    
+  width:100%;    
+  height:350px;    
+  border:0;    
+  border-radius:20px;    
+}    
+  
+</style>    
+</head>    
+  
+<body>    
+  
+<div class="banner">🚚 Envíos en Barranqueras y Resistencia | Milanesa fresca todos los días 🔥</div>
+  
+<header>    
+<img src="BackgroundEraser_20260304_034450533.png">    
+<p>Milanesas artesanales premium</p>    
+  
+<div class="cart-icon" onclick="toggleCart()">    
+🛒    
+<span class="cart-badge" id="cart-count">0</span>    
+</div>    
+  
+</header>    
+  
+<section>    
+  
+<div class="card">    
+<h2>👀 Personas viendo la web</h2>    
+<div class="counter" id="viewers">0</div>    
+</div>    
+  
+<div class="card">    
+<h2>🔥 Vendido Hoy</h2>    
+<div class="counter" id="sold">0</div>    
+</div>    
+  
+<div class="card">    
+<h2>🎁 Oferta del Día</h2>    
+<p>Comprando 5kg o más te llevás 10% de descuento en tu próxima compra</p>    
+</div>    
+  
+<div class="card">    
+<h2>+ Clientes Satisfechos</h2>    
+<div class="counter" id="counter">0</div>    
+</div>    
+  
+<div class="card">    
+<h2>Nuestros Productos</h2>    
+<div class="products">    
+  
+<div class="product">    
+<img src="Milanesapollo.jpeg">    
+<h3>Milanesa de Pollo x 3kg</h3>    
+<p>$18.000</p>    
+<button onclick="addToCart('3kg',18000)">Agregar</button>    
+</div>    
+  
+<div class="product">    
+<img src="Milanesapollo.jpeg">    
+<h3>Milanesa de Pollo x 5kg</h3>    
+<p>$30.000</p>    
+<button onclick="addToCart('5kg',30000)">Agregar</button>    
+</div>    
+  
+<div class="product">    
+<img src="Milanesapollo.jpeg">    
+<h3>Milanesa de Pollo x 10kg</h3>    
+<p>$57.000</p>    
+<button onclick="addToCart('10kg',57000)">Agregar</button>    
+</div>    
+  
+<div class="product">    
+<img src="Milanesapollo.jpeg">    
+<h3>Milanesa de Pollo x 25kg</h3>    
+<p>$135.000</p>    
+<button onclick="addToCart('25kg',135000)">Agregar</button>    
+</div>    
+  
+</div>    
+</div>    
+  
+<h2>Ubicación</h2>    
+<iframe src="https://www.google.com/maps?q=Miguel%20Cane%202575,%20Barranqueras,%20Chaco&output=embed"></iframe>    
+  
+</section>    
+  
+<a href="https://wa.me/543624505931" class="whatsapp-float">💬</a>    
+  
+<div id="toast" class="toast">Producto agregado ✔</div>    
+  
+<div class="cart-panel" id="cartPanel">    
+<button class="close-cart" onclick="toggleCart()">Cerrar</button>    
+<h3>Tu Carrito</h3>    
+<div id="cart-list"></div>    
+<hr>    
+<p>Total: $<span id="total">0</span></p>    
+<button onclick="sendWhatsApp()">Finalizar Compra</button>    
+</div>    
+  
+<script>    
+  
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let total = 0;
 
-<style>  
-body{  
-  margin:0;  
-  font-family:'Segoe UI', sans-serif;  
-  background:#f4f4f4;  
-  color:#222;  
-}  
+function toggleCart(){
+ document.getElementById("cartPanel").classList.toggle("active");
+}
 
-header{  
-  background:white;  
-  text-align:center;  
-  padding:30px;  
-  position:relative;  
-}  
+function updateBadge(){
+ let qty=0;
+ cart.forEach(i=>qty+=i.qty);
+ document.getElementById("cart-count").innerText=qty;
+}
 
-header img{  
-  max-width:250px;  
-}  
-
-.cart-icon{  
-  position:absolute;  
-  right:30px;  
-  top:30px;  
-  cursor:pointer;  
-  font-size:28px;  
-}  
-
-.cart-badge{  
-  background:red;  
-  color:white;  
-  font-size:14px;  
-  padding:3px 8px;  
-  border-radius:50%;  
-  position:absolute;  
-  top:-8px;  
-  right:-10px;  
-}  
-
-/* PANEL CARRITO */  
-.cart-panel{  
-  position:fixed;  
-  right:-400px;  
-  top:0;  
-  width:350px;  
-  height:100%;  
-  background:white;  
-  box-shadow:-5px 0 20px rgba(0,0,0,0.2);  
-  padding:20px;  
-  transition:0.4s ease;  
-  overflow:auto;  
-  z-index:10000;  
-}  
-
-.cart-panel.active{  
-  right:0;  
-}  
-
-.close-cart{  
-  background:black;  
-  color:white;  
-  padding:5px 10px;  
-  border:none;  
-  cursor:pointer;  
-  border-radius:5px;  
-  margin-bottom:10px;  
-}  
-
-section{  
-  padding:40px 20px;  
-  max-width:1100px;  
-  margin:auto;  
-}  
-
-.card{  
-  background:white;  
-  padding:30px;  
-  border-radius:20px;  
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);  
-  margin-bottom:40px;  
-}  
-
-h2{text-align:center;margin-bottom:20px;}  
-
-.counter{  
-  font-size:32px;  
-  text-align:center;  
-  color:#d62828;  
-  font-weight:bold;  
-}  
-
-.products{  
-  display:grid;  
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));  
-  gap:30px;  
-}  
-
-.product{  
-  background:white;  
-  padding:20px;  
-  border-radius:15px;  
-  box-shadow:0 10px 20px rgba(0,0,0,0.05);  
-  text-align:center;  
-}  
-
-.product img{  
-  width:100%;  
-  border-radius:15px;  
-  height:200px;  
-  object-fit:cover;  
-}  
-
-button{  
-  background:#d62828;  
-  color:white;  
-  border:none;  
-  padding:10px 20px;  
-  border-radius:8px;  
-  cursor:pointer;  
-}  
-
-button:hover{background:#9d0208;}  
-
-/* ITEM CARRITO */  
-.cart-item{  
-  display:flex;  
-  align-items:center;  
-  justify-content:space-between;  
-  margin-bottom:10px;  
-  padding:8px;  
-  border-bottom:1px solid #ddd;  
-}  
-
-.cart-item img{  
-  width:40px;  
-  height:40px;  
-  border-radius:8px;  
-  object-fit:cover;  
-  margin-right:8px;  
-}  
-
-.qty-btn{  
-  background:black;  
-  padding:2px 6px;  
-  font-size:14px;  
-  margin:0 3px;  
-}  
-
-.toast{  
-  position:fixed;  
-  top:20px;  
-  right:20px;  
-  background:#25D366;  
-  color:white;  
-  padding:15px 20px;  
-  border-radius:10px;  
-  opacity:0;  
-  transition:0.4s;  
-  z-index:9999;  
-}  
-
-.toast.show{opacity:1;}  
-
-.whatsapp-float{  
-  position:fixed;  
-  bottom:20px;  
-  right:20px;  
-  background:#25D366;  
-  width:60px;  
-  height:60px;  
-  border-radius:50%;  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  font-size:28px;  
-  text-decoration:none;  
-  color:white;  
-}  
-
-iframe{  
-  width:100%;  
-  height:350px;  
-  border:0;  
-  border-radius:20px;  
-}  
-
-</style>  
-</head>  
-
-<body>  
-
-<header>  
-<img src="BackgroundEraser_20260304_034450533.png">  
-<p>Milanesas artesanales premium</p>  
-
-<div class="cart-icon" onclick="toggleCart()">  
-🛒  
-<span class="cart-badge" id="cart-count">0</span>  
-</div>  
-
-</header>  
-
-<section>  
-
-<div class="card">  
-<h2>+ Clientes Satisfechos</h2>  
-<div class="counter" id="counter">0</div>  
-</div>  
-
-<div class="card">  
-<h2>Nuestros Productos</h2>  
-<div class="products">  
-
-<div class="product">  
-<img src="Milanesapollo.jpeg">  
-<h3>Milanesa de Pollo x 3kg</h3>  
-<p>$18.000</p>  
-<button onclick="addToCart('3kg',18000)">Agregar</button>  
-</div>  
-
-<div class="product">  
-<img src="Milanesapollo.jpeg">  
-<h3>Milanesa de Pollo x 5kg</h3>  
-<p>$30.000</p>  
-<button onclick="addToCart('5kg',30000)">Agregar</button>  
-</div>  
-
-<div class="product">  
-<img src="Milanesapollo.jpeg">  
-<h3>Milanesa de Pollo x 10kg</h3>  
-<p>$57.000</p>  
-<button onclick="addToCart('10kg',57000)">Agregar</button>  
-</div>  
-
-<div class="product">  
-<img src="Milanesapollo.jpeg">  
-<h3>Milanesa de Pollo x 25kg</h3>  
-<p>$135.000</p>  
-<button onclick="addToCart('25kg',135000)">Agregar</button>  
-</div>  
-
-</div>  
-</div>  
-
-<h2>Ubicación</h2>  
-<iframe src="https://www.google.com/maps?q=Miguel%20Cane%202575,%20Barranqueras,%20Chaco&output=embed"></iframe>  
-
-</section>  
-
-<a href="https://wa.me/543624505931" class="whatsapp-float">💬</a>  
-
-<div id="toast" class="toast">Producto agregado ✔</div>  
-
-<!-- PANEL CARRITO -->  
-<div class="cart-panel" id="cartPanel">  
-<button class="close-cart" onclick="toggleCart()">Cerrar</button>  
-<h3>Tu Carrito</h3>  
-<div id="cart-list"></div>  
-<hr>  
-<p>Total: $<span id="total">0</span></p>
-<button id="checkoutBtn" onclick="sendWhatsApp()" style="display:none;margin-top:10px;">
-Finalizar Compra
-</button>  
-
-<script>  
-
-let cart=[];  
-let total=0;  
-
-function toggleCart(){  
- document.getElementById("cartPanel").classList.toggle("active");  
-}  
-
-function updateBadge(){  
- document.getElementById("cart-count").innerText=cart.length;  
-}  
-
-function renderCart(){  
 function renderCart(){
  let list=document.getElementById("cart-list");
  list.innerHTML="";
+ total=0;
 
  cart.forEach((item,index)=>{
+   total += item.price * item.qty;
+
    let div=document.createElement("div");
    div.className="cart-item";
 
@@ -307,85 +339,90 @@ function renderCart(){
  });
 
  document.getElementById("total").innerText=total;
- updateBadge();
 
- if(cart.length > 0){
-   document.getElementById("checkoutBtn").style.display="block";
- }else{
-   document.getElementById("checkoutBtn").style.display="none";
- }
+ localStorage.setItem("cart",JSON.stringify(cart));
+
+ updateBadge();
 }
 
- document.getElementById("total").innerText=total;  
- updateBadge();  
-}  
+function addToCart(name,price){
 
-function addToCart(name,price){  
- cart.push({name:name,price:price,qty:1});  
- total+=price;  
- renderCart();  
- showToast();  
-}  
+ let existing = cart.find(p=>p.name===name);
 
-function changeQty(index,change){  
- cart[index].qty += change;  
+ if(existing){
+   existing.qty++;
+ } else {
+   cart.push({name:name,price:price,qty:1});
+ }
 
- if(cart[index].qty <=0){  
-   total -= cart[index].price;  
-   cart.splice(index,1);  
- } else {  
-   total += cart[index].price * change;  
- }  
+ renderCart();
+ showToast();
+}
 
- function renderCart(){
- let list=document.getElementById("cart-list");
- list.innerHTML="";
+function changeQty(index,change){
+ cart[index].qty += change;
 
- cart.forEach((item,index)=>{
-   let div=document.createElement("div");
-   div.className="cart-item";
+ if(cart[index].qty<=0){
+   cart.splice(index,1);
+ }
 
-   div.innerHTML=`
-   <div style="display:flex;align-items:center;">
-   <img src="Milanesapollo.jpeg">
-   <div>${item.name}<br>$${item.price}</div>
-   </div>
+ renderCart();
+}
 
-   <div>
-   <button class="qty-btn" onclick="changeQty(${index},-1)">-</button>
-   ${item.qty}
-   <button class="qty-btn" onclick="changeQty(${index},1)">+</button>
-   </div>
-   `;
+function sendWhatsApp(){
 
-   list.appendChild(div);
+ let msg="Hola quiero comprar:%0A";
+
+ cart.forEach(i=>{
+   msg+=i.name+" x"+i.qty+" - $"+(i.price*i.qty)+"%0A";
  });
 
- document.getElementById("total").innerText=total;
- updateBadge();
+ msg+="Total: $"+total;
 
- if(cart.length > 0){
-   document.getElementById("checkoutBtn").style.display="block";
- }else{
-   document.getElementById("checkoutBtn").style.display="none";
+ window.open("https://wa.me/543624505931?text="+msg);
+}
+
+function showToast(){
+ let toast=document.getElementById("toast");
+ toast.classList.add("show");
+ setTimeout(()=>toast.classList.remove("show"),2000);
+}
+
+renderCart();
+
+/* contador clientes */
+
+let count=0;
+let target=500;
+let counter=document.getElementById("counter");
+
+let interval=setInterval(()=>{
+ count+=5;
+ counter.innerText="+"+count;
+ if(count>=target){
+   counter.innerText="+500";
+   clearInterval(interval);
  }
-}  
+},20);
 
-/* contador */  
-let count=0;  
-let target=500;  
-let counter=document.getElementById("counter");  
+/* viewers fake */
 
-let interval=setInterval(()=>{  
- count+=5;  
- counter.innerText="+"+count;  
- if(count>=target){  
-   counter.innerText="+500";  
-   clearInterval(interval);  
- }  
-},20);  
+let viewers=document.getElementById("viewers");
+setInterval(()=>{
+ viewers.innerText=Math.floor(Math.random()*12)+3;
+},2000);
 
-</script>  
+/* vendidos hoy */
 
-</body>  
+let sold=document.getElementById("sold");
+let soldCount=0;
+
+setInterval(()=>{
+ soldCount += Math.floor(Math.random()*2);
+ sold.innerText=soldCount+" kg";
+},3000);
+
+</script>    
+  
+</body>    
 </html>

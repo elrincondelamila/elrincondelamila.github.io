@@ -282,28 +282,39 @@ function updateBadge(){
 }  
 
 function renderCart(){  
- let list=document.getElementById("cart-list");  
- list.innerHTML="";  
+function renderCart(){
+ let list=document.getElementById("cart-list");
+ list.innerHTML="";
 
- cart.forEach((item,index)=>{  
-   let div=document.createElement("div");  
-   div.className="cart-item";  
+ cart.forEach((item,index)=>{
+   let div=document.createElement("div");
+   div.className="cart-item";
 
-   div.innerHTML=`  
-   <div style="display:flex;align-items:center;">  
-   <img src="Milanesapollo.jpeg">  
-   <div>${item.name}<br>$${item.price}</div>  
-   </div>  
+   div.innerHTML=`
+   <div style="display:flex;align-items:center;">
+   <img src="Milanesapollo.jpeg">
+   <div>${item.name}<br>$${item.price}</div>
+   </div>
 
-   <div>  
-   <button class="qty-btn" onclick="changeQty(${index},-1)">-</button>  
-   ${item.qty}  
-   <button class="qty-btn" onclick="changeQty(${index},1)">+</button>  
-   </div>  
-   `;  
+   <div>
+   <button class="qty-btn" onclick="changeQty(${index},-1)">-</button>
+   ${item.qty}
+   <button class="qty-btn" onclick="changeQty(${index},1)">+</button>
+   </div>
+   `;
 
-   list.appendChild(div);  
- });  
+   list.appendChild(div);
+ });
+
+ document.getElementById("total").innerText=total;
+ updateBadge();
+
+ if(cart.length > 0){
+   document.getElementById("checkoutBtn").style.display="block";
+ }else{
+   document.getElementById("checkoutBtn").style.display="none";
+ }
+}
 
  document.getElementById("total").innerText=total;  
  updateBadge();  
